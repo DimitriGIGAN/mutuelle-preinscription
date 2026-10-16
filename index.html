@@ -1,0 +1,301 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>Pré-inscription Mutuelle Obsèques</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+/* Concept : un grand bandeau lagon, le formulaire flotte à droite comme une carte, le reste respire sur fond clair.
+   Mouvement : opacity + transform seulement, une fois, avec repli sans animation. */
+:root{
+  --bg:#F3F7F7; --surface:#FFFFFF; --ink:#0E2A31; --muted:#58707A; --line:#DCE6E8; --soft:#E8F1F2;
+  --hero-a:#062F3A; --hero-b:#0B5563; --hero-c:#14908F; --on-hero:#FFFFFF;
+  --accent:#FF6A4D; --on-accent:#1E0A05; --ok:#12806F; --warn-bg:#FFF1D6; --warn-ink:#6A4A00; --focus:#14908F;
+  --shadow:0 18px 50px -18px rgba(6,47,58,.35);
+  --display:'Sora',system-ui,sans-serif; --sans:'DM Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --t-fondu:1.2s; --t-pause:.5s; --t-montee:1s; --descente:140px;
+  --motion-duration:520ms; --motion-distance:16px; --motion-ease:cubic-bezier(.16,1,.3,1);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0A1A1F; --surface:#112830; --ink:#EAF3F4; --muted:#93AAB2; --line:#21404A; --soft:#173540;
+  --accent:#FF7A5F; --ok:#4FD1BC; --warn-bg:#3A3112; --warn-ink:#F3DFA0; --focus:#4FD1BC; --shadow:0 18px 50px -18px rgba(0,0,0,.7); color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0A1A1F; --surface:#112830; --ink:#EAF3F4; --muted:#93AAB2; --line:#21404A; --soft:#173540;
+  --accent:#FF7A5F; --ok:#4FD1BC; --warn-bg:#3A3112; --warn-ink:#F3DFA0; --focus:#4FD1BC; --shadow:0 18px 50px -18px rgba(0,0,0,.7); color-scheme:dark; }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;margin:0;overflow-x:hidden}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Bandeau */
+.hero{background:linear-gradient(135deg,var(--hero-a) 0%,var(--hero-b) 55%,var(--hero-c) 100%);color:var(--on-hero);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 65%);pointer-events:none}
+.heroGrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:start;padding-block:48px 72px;position:relative;z-index:1}
+@media (max-width:900px){ .heroGrid{grid-template-columns:minmax(0,1fr);gap:32px;padding-block:32px 40px} }
+
+/* Animation d'ouverture : le logo apparaît en fondu, glisse vers le haut, puis le texte se révèle */
+.logo{display:block;width:64px;height:64px;margin:0 0 28px;color:#fff;
+  animation:logo-fondu var(--t-fondu) ease-out both, logo-montee var(--t-montee) cubic-bezier(.65,0,.35,1) calc(var(--t-fondu) + var(--t-pause)) both}
+@keyframes logo-fondu{from{opacity:0}to{opacity:1}}
+@keyframes logo-montee{from{transform:translateY(var(--descente))}to{transform:translateY(0)}}
+.intro{animation:intro .9s ease-out calc(var(--t-fondu) + var(--t-pause) + var(--t-montee) - .3s) both}
+@keyframes intro{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.8;margin:0 0 16px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;margin:0 0 20px;text-wrap:balance}
+.lead{font-size:clamp(17px,2vw,20px);margin:0;max-width:46ch;opacity:.92}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 0;padding:0;list-style:none}
+.chips li{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);font-size:14px;font-weight:500}
+
+/* Carte formulaire */
+form{background:var(--surface);color:var(--ink);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+form h2{font-family:var(--display);font-size:24px;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+.small{font-size:13px;color:var(--muted)}
+.field{display:grid;gap:6px;margin-top:16px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:520px){ .row2{grid-template-columns:minmax(0,1fr)} form{padding:22px} }
+label{font-weight:600;font-size:14px}
+input[type=text],select{width:100%;font:inherit;color:var(--ink);background:var(--soft);border:2px solid transparent;border-radius:14px;padding:12px 14px;min-height:50px;transition:border-color .15s,background .15s}
+input[type=text]:hover,select:hover{border-color:var(--line)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+input[type=text]:focus,select:focus{background:var(--surface);border-color:var(--focus)}
+.choice{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;font-weight:400;font-size:14px;color:var(--muted)}
+.choice input{margin-top:2px;width:20px;height:20px;accent-color:var(--accent)}
+.consent{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+button.primary{margin-top:20px;width:100%;min-height:54px;font:inherit;font-family:var(--display);font-weight:600;font-size:16px;background:var(--accent);color:var(--on-accent);border:0;border-radius:999px;cursor:pointer;transition:filter .15s}
+button.primary:hover:not(:disabled){filter:brightness(1.06)}
+button.primary:disabled{opacity:.6;cursor:not-allowed}
+.err{color:var(--accent);font-size:14px;margin:12px 0 0;min-height:1.4em}
+.err.info{color:var(--muted)}
+.done{background:var(--surface);color:var(--ink);border-radius:24px;padding:32px;box-shadow:var(--shadow)}
+.done h2{font-family:var(--display);color:var(--ok);margin:0 0 8px;font-size:24px}
+.done p{margin:0}
+
+/* Contenu */
+main .wrap{padding-block:64px 56px}
+.sec-title{font-family:var(--display);font-size:clamp(24px,3.4vw,34px);line-height:1.15;letter-spacing:-.015em;margin:0 0 8px;text-wrap:balance}
+.sec-sub{color:var(--muted);margin:0 0 28px;max-width:56ch}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:820px){ .cards{grid-template-columns:minmax(0,1fr)} }
+.card{background:var(--surface);border-radius:20px;padding:24px;border:1px solid var(--line)}
+.card .ico{width:44px;height:44px;border-radius:14px;background:var(--soft);color:var(--ok);display:grid;place-items:center;margin-bottom:16px}
+.card .ico svg{width:22px;height:22px}
+.card h3{font-family:var(--display);font-size:18px;margin:0 0 6px;letter-spacing:-.01em}
+.card p{margin:0;color:var(--muted);font-size:15px}
+
+.estim{margin-top:72px}
+.ages{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
+.age{font:inherit;font-weight:600;font-size:15px;padding:10px 18px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:44px}
+.age[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.prices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:640px){ .prices{grid-template-columns:minmax(0,1fr)} }
+.price{border-radius:20px;padding:24px;background:var(--surface);border:1px solid var(--line)}
+.price.main{background:linear-gradient(160deg,var(--hero-b),var(--hero-a));color:#fff;border-color:transparent}
+.price .name{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;opacity:.75}
+.price .amount{font-family:var(--display);font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:8px 0 2px;font-variant-numeric:tabular-nums}
+.price .amount small{font-size:16px;font-weight:500;opacity:.7}
+.price .cap{font-size:15px;opacity:.85}
+.notice{background:var(--warn-bg);color:var(--warn-ink);padding:16px 18px;border-radius:16px;font-size:14px;margin:36px 0 0}
+
+.admin{margin-top:64px;border-top:1px solid var(--line);padding-top:28px}
+.admin h2{font-family:var(--display);font-size:22px;margin:0 0 14px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:480px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
+
+/* Apparition au défilement : une seule fois, seulement si le script tourne (sinon tout reste visible) */
+.js [data-reveal]{opacity:0;transform:translateY(var(--motion-distance));
+  transition:opacity var(--motion-duration) var(--motion-ease),transform var(--motion-duration) var(--motion-ease);will-change:opacity,transform}
+.js [data-reveal].is-visible{opacity:1;transform:translate3d(0,0,0);will-change:auto}
+
+@media (prefers-reduced-motion:reduce){
+  .logo,.intro{animation:none}
+  .js [data-reveal]{opacity:1;transform:none;transition:none;will-change:auto}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap heroGrid">
+    <div>
+      <svg class="logo" viewBox="0 0 240 240" role="img" aria-label="Logo du projet"><circle cx="120" cy="120" r="108" fill="none" stroke="currentColor" stroke-width="10"/><path d="M120 60 L160 150 H80 Z" fill="#FF6A4D"/><rect x="70" y="164" width="100" height="12" rx="6" fill="currentColor"/></svg>
+      <p class="kicker intro">Prévoyance obsèques · La Réunion</p>
+      <h1 class="intro">Vos proches n’avanceront rien.</h1>
+      <p class="lead intro">Nous créons une mutuelle locale qui prend en charge jusqu’à 2 200 € d’obsèques, réglés directement à l’opérateur funéraire de votre commune. Dites-nous si ce projet vous intéresse.</p>
+      <ul class="chips intro"><li>Gratuit</li><li>Sans engagement</li><li>Aucun paiement</li></ul>
+    </div>
+
+    <div id="formZone" class="intro">
+      <form id="f" novalidate autocomplete="on">
+        <h2>Je me pré-inscris</h2>
+        <p class="small" style="margin:0">Quatre informations, moins d’une minute.</p>
+
+        <div class="row2">
+          <div class="field"><label for="prenom">Prénom *</label><input id="prenom" name="prenom" type="text" autocomplete="given-name" maxlength="60" aria-describedby="err"></div>
+          <div class="field"><label for="nom">Nom *</label><input id="nom" name="nom" type="text" autocomplete="family-name" maxlength="60" aria-describedby="err"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="commune">Commune *</label>
+            <select id="commune" name="commune" aria-describedby="err"><option value="">Choisir…</option></select></div>
+          <div class="field"><label for="age">Âge *</label>
+            <select id="age" name="age" aria-describedby="err"><option value="">Choisir…</option><option>Moins de 25 ans</option><option>25–34 ans</option><option>35–44 ans</option><option>45–54 ans</option><option>55–64 ans</option><option>65–74 ans</option><option>75–79 ans</option><option>80 ans et plus</option></select></div>
+        </div>
+
+        <div class="consent">
+          <label class="choice"><input id="consent" type="checkbox" aria-describedby="err"><span>J’accepte que mon nom, mon prénom, ma commune et mon âge soient enregistrés pour mesurer l’intérêt pour ce projet. Ces données ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. *</span></label>
+        </div>
+
+        <p class="err" id="err" role="status" aria-live="polite"></p>
+        <button class="primary" id="go" type="submit">Envoyer ma pré-inscription</button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h2 class="sec-title" data-reveal>Simple, local, sans surprise</h2>
+    <p class="sec-sub" data-reveal>Le principe en trois idées.</p>
+    <div class="cards">
+      <div class="card" data-reveal>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg></div>
+        <h3>La famille n’avance rien</h3>
+        <p>La mutuelle règle directement l’opérateur funéraire de votre commune. Libre choix de l’opérateur.</p>
+      </div>
+      <div class="card" data-reveal>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></svg></div>
+        <h3>Un prix fixé à l’âge d’entrée</h3>
+        <p>Votre cotisation ne bouge plus ensuite. Pas de questionnaire de santé, carence de 12 mois.</p>
+      </div>
+      <div class="card" data-reveal>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div>
+        <h3>Une mutuelle réunionnaise</h3>
+        <p>Sans but lucratif, gouvernée par ses membres. Les excédents restent dans la mutuelle.</p>
+      </div>
+    </div>
+
+    <section class="estim" aria-labelledby="h-est">
+      <h2 class="sec-title" id="h-est" data-reveal>Combien cela coûterait-il ?</h2>
+      <p class="sec-sub" data-reveal>Choisissez l’âge à l’adhésion. Cotisation annuelle envisagée, selon la formule.</p>
+      <div class="ages" id="ages" role="group" aria-label="Âge à l’adhésion"></div>
+      <div class="prices" aria-live="polite">
+        <div class="price" data-reveal><div class="name">Essentiel</div><div class="amount"><span id="p1">–</span><small> €/an</small></div><div class="cap">1 500 € d’obsèques</div></div>
+        <div class="price main" data-reveal><div class="name">Standard</div><div class="amount"><span id="p2">–</span><small> €/an</small></div><div class="cap">2 200 € d’obsèques</div></div>
+        <div class="price" data-reveal><div class="name">Confort</div><div class="amount"><span id="p3">–</span><small> €/an</small></div><div class="cap">3 000 € d’obsèques</div></div>
+      </div>
+      <p class="small" style="margin-top:14px">Montants indicatifs, à valider par une étude actuarielle. Un enfant peut souscrire pour son parent.</p>
+      <p class="notice" data-reveal>Ce n’est pas une adhésion. La mutuelle n’existe pas encore juridiquement : elle doit être constituée et obtenir les autorisations nécessaires avant de proposer un contrat.</p>
+    </section>
+
+    <section class="admin" id="admin" hidden aria-labelledby="h-admin">
+      <h2 id="h-admin">Pré-inscrits <span id="count" class="small"></span></h2>
+      <div class="tablewrap"><table><thead><tr><th>Date</th><th>Prénom</th><th>Nom</th><th>Commune</th><th>Âge</th></tr></thead><tbody id="rows"></tbody></table></div>
+      <p class="small" style="margin-top:10px">Visible uniquement par vous. Ces données sont personnelles : ne les partagez pas.</p>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap">Projet porté par Dimitri GIGAN, La Réunion. Les montants sont des hypothèses de travail. Aucune adhésion ni paiement n’est possible à ce stade.</div></footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Apparition au défilement : chaque élément une seule fois ; repli : tout visible */
+  function setupScrollReveal(){
+    var targets=Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if(!targets.length)return;
+    if(reduce||!('IntersectionObserver' in window)){targets.forEach(function(t){t.classList.add('is-visible')});return}
+    document.documentElement.classList.add('js');
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(!en.isIntersecting)return;en.target.classList.add('is-visible');io.unobserve(en.target)});
+    },{root:null,rootMargin:'0px 0px -10% 0px',threshold:0.1});
+    targets.forEach(function(t){io.observe(t)});
+    /* sécurité : si rien n'a bougé après 4 s, tout devient visible */
+    setTimeout(function(){targets.forEach(function(t){t.classList.add('is-visible')})},4000);
+  }
+  setupScrollReveal();
+
+  var COMMUNES=["Les Avirons","Bras-Panon","Cilaos","Entre-Deux","L’Étang-Salé","La Plaine-des-Palmistes","La Possession","Le Port","Petite-Île","Saint-André","Saint-Benoît","Saint-Denis","Saint-Joseph","Saint-Leu","Saint-Louis","Saint-Paul","Saint-Philippe","Saint-Pierre","Sainte-Marie","Sainte-Rose","Sainte-Suzanne","Salazie","Le Tampon","Les Trois-Bassins"];
+  var sel=document.getElementById('commune');
+  COMMUNES.forEach(function(c){var o=document.createElement('option');o.textContent=c;sel.appendChild(o);});
+
+  /* Estimateur de cotisation */
+  var GRID=[['25–34 ans',40,45,55],['35–44 ans',50,60,75],['45–54 ans',70,90,115],['55–64 ans',95,125,165],['65–74 ans',125,165,220],['75–79 ans',155,210,280]];
+  var agesEl=document.getElementById('ages');
+  function pick(i){
+    Array.prototype.forEach.call(agesEl.children,function(b,j){b.setAttribute('aria-pressed',j===i?'true':'false')});
+    document.getElementById('p1').textContent=GRID[i][1];document.getElementById('p2').textContent=GRID[i][2];document.getElementById('p3').textContent=GRID[i][3];
+  }
+  GRID.forEach(function(g,i){var b=document.createElement('button');b.type='button';b.className='age';b.textContent=g[0];b.setAttribute('aria-pressed','false');b.addEventListener('click',function(){pick(i)});agesEl.appendChild(b)});
+  pick(2);
+
+  var f=document.getElementById('f'),err=document.getElementById('err'),go=document.getElementById('go'),zone=document.getElementById('formZone');
+  var db=null,user=null,uid=null;
+  function $(id){return document.getElementById(id)}
+  function say(msg,info){err.className='err'+(info?' info':'');err.textContent=msg}
+  function showDone(name,already){
+    zone.innerHTML='';
+    var d=document.createElement('div');d.className='done';d.setAttribute('role','status');
+    var h=document.createElement('h2');h.textContent=already?'Vous êtes déjà pré-inscrit(e)':'Merci '+name+', c’est enregistré';
+    var p=document.createElement('p');p.textContent='Votre pré-inscription nous aide à montrer que le besoin existe. Aucun paiement n’est demandé et rien ne vous engage.';
+    d.appendChild(h);d.appendChild(p);zone.appendChild(d);
+    if(!reduce&&d.animate)d.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});
+  }
+  function showUnavailable(){
+    go.disabled=true;
+    say('L’enregistrement des pré-inscriptions n’est pas disponible depuis ce lien pour le moment. Revenez bientôt.',true);
+  }
+  f.addEventListener('submit',async function(e){
+    e.preventDefault();
+    say('');
+    var rec={prenom:$('prenom').value.trim(),nom:$('nom').value.trim(),commune:$('commune').value,age:$('age').value};
+    if(!rec.prenom){say('Indiquez votre prénom.');$('prenom').focus();return}
+    if(!rec.nom){say('Indiquez votre nom.');$('nom').focus();return}
+    if(!rec.commune){say('Choisissez votre commune.');$('commune').focus();return}
+    if(!rec.age){say('Choisissez une tranche d’âge.');$('age').focus();return}
+    if(!$('consent').checked){say('Cochez la case d’accord pour enregistrer vos informations.');$('consent').focus();return}
+    if(!db||!uid){showUnavailable();return}
+    go.disabled=true;go.setAttribute('aria-busy','true');go.textContent='Envoi…';say('Enregistrement…',true);
+    if(!reduce&&go.animate){try{go.animate([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:180,easing:'ease-out'})}catch(x){}}
+    rec.consent=true;rec.createdAt=new Date().toISOString();
+    try{
+      await db.doc('preinscriptions/'+uid).set(rec);
+      showDone(rec.prenom,false);
+    }catch(x){
+      go.disabled=false;go.setAttribute('aria-busy','false');go.textContent='Envoyer ma pré-inscription';
+      say((x&&x.code==='invalid_argument')?'Votre accès ne permet pas d’enregistrer une pré-inscription.':'L’envoi n’a pas abouti. Réessayez dans un instant.');
+    }
+  });
+
+  function fmtDate(iso){try{return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return ''}}
+  function renderRows(snap){
+    var docs=snap.docs.map(function(d){return d.data()});
+    docs.sort(function(a,b){return (b.createdAt||'').localeCompare(a.createdAt||'')});
+    $('count').textContent='('+docs.length+')';
+    var tb=$('rows');tb.innerHTML='';
+    if(!docs.length){var tr=document.createElement('tr');var td=document.createElement('td');td.colSpan=5;td.textContent='Aucune pré-inscription pour le moment.';tr.appendChild(td);tb.appendChild(tr);return}
+    docs.forEach(function(r){
+      var tr=document.createElement('tr');
+      [fmtDate(r.createdAt),r.prenom,r.nom,r.commune,r.age].forEach(function(v){var td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+      tb.appendChild(tr);
+    });
+  }
+  (async function init(){
+    try{db=await claude.use('db');user=await claude.use('user')}catch(e){}
+    if(!db||!user){showUnavailable();return}
+    try{uid=await user.id()}catch(e){}
+    if(!uid){showUnavailable();return}
+    var canWrite=null;try{canWrite=await user.can('data.write')}catch(e){}
+    try{var mine=await db.doc('preinscriptions/'+uid).get();if(mine&&mine.exists){showDone('',true)}}catch(e){}
+    var isAdmin=false;try{isAdmin=!!(await user.canEdit())}catch(e){}
+    if(isAdmin){
+      $('admin').hidden=false;
+      try{db.collection('preinscriptions').onSnapshot(renderRows,function(){})}catch(e){}
+    }
+    if(canWrite===false&&!isAdmin){showUnavailable()}
+  })();
+})();
+</script>
+
+</body></html>
