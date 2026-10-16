@@ -1,8 +1,13 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
 <title>Ansanm – Pré-inscription mutuelle obsèques</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
 <style>
+@font-face{font-family:'Sora';font-weight:500;font-style:normal;font-display:swap;src:url(fonts/sora-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Sora';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/sora-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Sora';font-weight:700;font-style:normal;font-display:swap;src:url(fonts/sora-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/dm-sans-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-weight:500;font-style:normal;font-display:swap;src:url(fonts/dm-sans-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-weight:600;font-style:normal;font-display:swap;src:url(fonts/dm-sans-latin-600-normal.woff2) format('woff2')}
 /* Concept : un grand bandeau lagon, le formulaire flotte à droite comme une carte, le reste respire sur fond clair.
    Mouvement : opacity + transform seulement, une fois, avec repli sans animation. */
 :root{
@@ -133,6 +138,16 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   .logo,.intro{animation:none}
   .js [data-reveal]{opacity:1;transform:none;transition:none;will-change:auto}
 }
+
+.legal{padding:56px 0;border-top:1px solid var(--line)}
+.legal .wrap{max-width:780px}
+.legal h2{font-family:var(--display);font-size:26px;margin:0 0 14px}
+.legal h3{font-family:var(--display);font-size:17px;margin:22px 0 6px}
+.legal p,.legal li{color:var(--ink);font-size:15px}
+.legal ul{padding-left:20px;margin:6px 0}
+.legal .todo{background:var(--warn-bg);color:var(--warn-ink);padding:1px 6px;border-radius:4px}
+footer nav{margin-top:10px;display:flex;gap:18px;flex-wrap:wrap}
+footer nav a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 </style>
 
 <header class="hero">
@@ -173,7 +188,7 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
         </div>
 
         <div class="consent">
-          <label class="choice"><input id="consent" type="checkbox" aria-describedby="err"><span>J’accepte que mon nom, mon prénom, ma commune et mon âge soient enregistrés pour mesurer l’intérêt pour ce projet. Ces données ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. *</span></label>
+          <label class="choice"><input id="consent" type="checkbox" aria-describedby="err"><span>J’accepte que mon nom, mon prénom, ma commune et mon âge soient enregistrés pour mesurer l’intérêt pour ce projet. Ces données ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. <a href="#confidentialite">Politique de confidentialité</a> *</span></label>
         </div>
 
         <p class="err" id="err" role="status" aria-live="polite"></p>
@@ -193,7 +208,7 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
             <select id="communeE" aria-describedby="erre"><option value="">Choisir…</option></select></div>
         </div>
         <div class="consent">
-          <label class="choice"><input id="consentE" type="checkbox" aria-describedby="erre"><span>J’accepte que ces informations soient enregistrées pour être recontacté(e) au sujet de ce projet. Elles ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. *</span></label>
+          <label class="choice"><input id="consentE" type="checkbox" aria-describedby="erre"><span>J’accepte que ces informations soient enregistrées pour être recontacté(e) au sujet de ce projet. Elles ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. <a href="#confidentialite">Politique de confidentialité</a> *</span></label>
         </div>
         <p class="err" id="erre" role="status" aria-live="polite"></p>
         <button class="primary" id="goe" type="submit">Envoyer pour mon entreprise</button>
@@ -257,7 +272,41 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   </div>
 </main>
 
-<footer><div class="wrap">Ansanm est le nom de travail du projet, porté par Dimitri GIGAN, La Réunion. Les montants sont des hypothèses de travail. Aucune adhésion ni paiement n’est possible à ce stade.</div></footer>
+<section class="legal" id="mentions-legales" aria-labelledby="ml-t"><div class="wrap">
+<h2 id="ml-t">Mentions légales</h2>
+<p><strong>Éditeur du site.</strong> Dimitri GIGAN, personne physique, porteur du projet Ansanm (nom de travail), La Réunion. Le projet n’est pas encore constitué en société ni en mutuelle : il n’existe pas d’organisme assureur et aucune adhésion, cotisation ou garantie n’est proposée sur ce site.</p>
+<p><strong>Directeur de la publication.</strong> Dimitri GIGAN.</p>
+<p><strong>Contact.</strong> <span class="todo">[à compléter : adresse e-mail de contact]</span></p>
+<p><strong>Hébergement du site.</strong> GitHub Pages, GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+<p><strong>Stockage des pré-inscriptions.</strong> Supabase, hébergé dans l’Union européenne (région Irlande).</p>
+<p><strong>Nature des informations.</strong> Les montants et exemples présentés sont des hypothèses de travail et ne constituent ni une offre, ni un devis, ni un conseil en assurance.</p>
+</div></section>
+
+<section class="legal" id="confidentialite" aria-labelledby="pc-t"><div class="wrap">
+<h2 id="pc-t">Politique de confidentialité</h2>
+<p>Cette page recueille des pré-inscriptions pour mesurer l’intérêt pour le projet Ansanm. Voici, en clair, ce qui est fait de vos informations.</p>
+<h3>Qui est responsable ?</h3>
+<p>Dimitri GIGAN, porteur du projet (contact : voir les mentions légales).</p>
+<h3>Quelles données ?</h3>
+<ul>
+<li><strong>Pré-inscription d’un particulier :</strong> prénom, nom, commune, tranche d’âge, et si l’inscription est faite pour vous ou pour un parent.</li>
+<li><strong>Pour un parent :</strong> vos prénom, nom et commune, et seulement la tranche d’âge et la commune de votre parent. Le nom du parent n’est pas demandé.</li>
+<li><strong>Entreprise :</strong> nom de l’entreprise, nom du contact, adresse e-mail, effectif et commune.</li>
+</ul>
+<p>Aucune donnée de santé, aucun mot de passe et aucun moyen de paiement ne sont demandés.</p>
+<h3>Pourquoi, et sur quelle base ?</h3>
+<p>Uniquement pour mesurer l’intérêt pour le projet et, pour les entreprises, être recontacté au sujet de ce projet. La base est votre consentement, donné en cochant la case du formulaire. Vos données ne sont ni vendues, ni transmises à des tiers à des fins commerciales.</p>
+<h3>Qui y a accès ?</h3>
+<p>Le porteur du projet. Le prestataire technique Supabase les héberge pour son compte, au sein de l’Union européenne (Irlande). Le site est servi par GitHub Pages ; ce site n’utilise ni cookie, ni outil de mesure d’audience, ni police chargée depuis un serveur tiers.</p>
+<h3>Combien de temps ?</h3>
+<p>Les données sont conservées au plus <span class="todo">[à confirmer : 24 mois]</span> après la pré-inscription, ou jusqu’à la création de la mutuelle si vous acceptez alors d’être contacté(e), puis supprimées.</p>
+<h3>Vos droits</h3>
+<p>Vous pouvez demander l’accès à vos données, leur rectification, leur suppression, ou retirer votre consentement à tout moment, en écrivant à l’adresse de contact indiquée dans les mentions légales. Vous pouvez aussi saisir la CNIL (<a href="https://www.cnil.fr" rel="noopener">cnil.fr</a>).</p>
+<h3>Mineurs</h3>
+<p>Ce formulaire s’adresse aux personnes majeures.</p>
+</div></section>
+
+<footer><div class="wrap">Ansanm est le nom de travail du projet, porté par Dimitri GIGAN, La Réunion. Les montants sont des hypothèses de travail. Aucune adhésion ni paiement n’est possible à ce stade.<nav aria-label="Informations légales"><a href="#mentions-legales">Mentions légales</a><a href="#confidentialite">Politique de confidentialité</a></nav></div></footer>
 
 <script>
 (function(){
@@ -356,7 +405,7 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
     var par=r.value==='parent'&&r.checked;
     if(!r.checked)return;
     $('ageLabel').textContent=par?'Âge de votre parent *':'Votre âge *';
-    document.querySelector('#f .consent span').textContent=par?CONSENT_PARENT:CONSENT_MOI;
+    document.querySelector('#f .consent span').innerHTML=par?CONSENT_PARENT:CONSENT_MOI;
   })});
 
   /* Envoi entreprise */
