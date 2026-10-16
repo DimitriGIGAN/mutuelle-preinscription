@@ -231,6 +231,8 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   pick(2);
 
   var f=document.getElementById('f'),err=document.getElementById('err'),go=document.getElementById('go'),zone=document.getElementById('formZone');
+  var SUPABASE={url:'https://kdjehagpiwwzwgvqfmod.supabase.co',key:'sb_publishable_ATpn2pNv4XROrL2xi1TGCA_odc2h4Jm'};
+  var SB=null;
   var db=null,user=null,uid=null;
   function $(id){return document.getElementById(id)}
   function say(msg,info){err.className='err'+(info?' info':'');err.textContent=msg}
@@ -255,12 +257,18 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
     if(!rec.commune){say('Choisissez votre commune.');$('commune').focus();return}
     if(!rec.age){say('Choisissez une tranche d’âge.');$('age').focus();return}
     if(!$('consent').checked){say('Cochez la case d’accord pour enregistrer vos informations.');$('consent').focus();return}
-    if(!db||!uid){showUnavailable();return}
+    if(!SB&&(!db||!uid)){showUnavailable();return}
     go.disabled=true;go.setAttribute('aria-busy','true');go.textContent='Envoi…';say('Enregistrement…',true);
     if(!reduce&&go.animate){try{go.animate([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:180,easing:'ease-out'})}catch(x){}}
     rec.consent=true;rec.createdAt=new Date().toISOString();
     try{
-      await db.doc('preinscriptions/'+uid).set(rec);
+      if(SB){
+        var r=await fetch(SB.url+'/rest/v1/preinscriptions',{method:'POST',headers:{'apikey':SB.key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({prenom:rec.prenom,nom:rec.nom,commune:rec.commune,age:rec.age,consent:true})});
+        if(!r.ok)throw new Error('http '+r.status);
+        try{localStorage.setItem('preinscrit','1')}catch(e){}
+      }else{
+        await db.doc('preinscriptions/'+uid).set(rec);
+      }
       showDone(rec.prenom,false);
     }catch(x){
       go.disabled=false;go.setAttribute('aria-busy','false');go.textContent='Envoyer ma pré-inscription';
@@ -283,7 +291,14 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   }
   (async function init(){
     try{db=await claude.use('db');user=await claude.use('user')}catch(e){}
-    if(!db||!user){showUnavailable();return}
+    if(!db||!user){
+      if(typeof claude==='undefined'||!window.claude){
+        SB=SUPABASE;
+        try{if(localStorage.getItem('preinscrit')==='1')showDone('',true)}catch(e){}
+        return;
+      }
+      showUnavailable();return;
+    }
     try{uid=await user.id()}catch(e){}
     if(!uid){showUnavailable();return}
     var canWrite=null;try{canWrite=await user.can('data.write')}catch(e){}
