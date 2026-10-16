@@ -68,6 +68,25 @@ button.primary:disabled{opacity:.6;cursor:not-allowed}
 .done h2{font-family:var(--display);color:var(--ok);margin:0 0 8px;font-size:24px}
 .done p{margin:0}
 
+/* Onglets Particulier / Entreprise + choix moi/parent */
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--soft);padding:5px;border-radius:999px;margin:0 0 18px}
+.tabs[hidden]{display:none}
+.tabs button{font:inherit;font-weight:600;font-size:14px;min-height:44px;border:0;border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.tabs button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px -2px rgba(6,47,58,.25)}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;border:0;padding:0}
+.who legend{font-weight:600;font-size:14px;padding:0;margin-bottom:6px}
+.who label{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:14px;padding:12px 14px;min-height:50px;font-weight:500;cursor:pointer}
+.who label:has(input:checked){border-color:var(--focus);background:var(--soft)}
+.who input{accent-color:var(--accent);width:18px;height:18px}
+.who input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+input[type=email]{width:100%;font:inherit;color:var(--ink);background:var(--soft);border:2px solid transparent;border-radius:14px;padding:12px 14px;min-height:50px}
+input[type=email]:focus{background:var(--surface);border-color:var(--focus)}
+input[type=email]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.b2b{margin-top:72px}
+.b2b .cta{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;background:var(--ink);color:var(--bg);font:inherit;font-family:var(--display);font-weight:600;border:0;cursor:pointer;margin-top:24px}
+.b2b .cta:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+@media (max-width:520px){ .who{grid-template-columns:minmax(0,1fr)} }
+
 /* Contenu */
 main .wrap{padding-block:64px 56px}
 .sec-title{font-family:var(--display);font-size:clamp(24px,3.4vw,34px);line-height:1.15;letter-spacing:-.015em;margin:0 0 8px;text-wrap:balance}
@@ -126,9 +145,19 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
     </div>
 
     <div id="formZone" class="intro">
+      <div class="tabs" role="group" aria-label="Type d’inscription">
+        <button type="button" id="tabP" aria-pressed="true">Particulier</button>
+        <button type="button" id="tabE" aria-pressed="false">Entreprise</button>
+      </div>
       <form id="f" novalidate autocomplete="on">
         <h2>Je me pré-inscris</h2>
-        <p class="small" style="margin:0">Quatre informations, moins d’une minute.</p>
+        <p class="small" style="margin:0">Quelques informations, moins d’une minute.</p>
+
+        <fieldset class="who">
+          <legend>Je m’inscris pour</legend>
+          <label><input type="radio" name="pour" value="moi" checked> Moi-même</label>
+          <label><input type="radio" name="pour" value="parent"> Mon parent</label>
+        </fieldset>
 
         <div class="row2">
           <div class="field"><label for="prenom">Prénom *</label><input id="prenom" name="prenom" type="text" autocomplete="given-name" maxlength="60" aria-describedby="err"></div>
@@ -137,7 +166,7 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
         <div class="row2">
           <div class="field"><label for="commune">Commune *</label>
             <select id="commune" name="commune" aria-describedby="err"><option value="">Choisir…</option></select></div>
-          <div class="field"><label for="age">Âge *</label>
+          <div class="field"><label for="age" id="ageLabel">Votre âge *</label>
             <select id="age" name="age" aria-describedby="err"><option value="">Choisir…</option><option>Moins de 25 ans</option><option>25–34 ans</option><option>35–44 ans</option><option>45–54 ans</option><option>55–64 ans</option><option>65–74 ans</option><option>75–79 ans</option><option>80 ans et plus</option></select></div>
         </div>
 
@@ -147,6 +176,25 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
 
         <p class="err" id="err" role="status" aria-live="polite"></p>
         <button class="primary" id="go" type="submit">Envoyer ma pré-inscription</button>
+      </form>
+
+      <form id="fe" novalidate autocomplete="on" hidden>
+        <h2>Mon entreprise est intéressée</h2>
+        <p class="small" style="margin:0">Nous vous recontactons pour échanger, sans engagement.</p>
+        <div class="field"><label for="ent">Entreprise *</label><input id="ent" type="text" autocomplete="organization" maxlength="100" aria-describedby="erre"></div>
+        <div class="field"><label for="contact">Votre nom et prénom *</label><input id="contact" type="text" autocomplete="name" maxlength="80" aria-describedby="erre"></div>
+        <div class="field"><label for="email">E-mail professionnel *</label><input id="email" type="email" autocomplete="email" maxlength="120" aria-describedby="erre"></div>
+        <div class="row2">
+          <div class="field"><label for="effectif">Nombre de salariés *</label>
+            <select id="effectif" aria-describedby="erre"><option value="">Choisir…</option><option>1 à 9</option><option>10 à 49</option><option>50 à 249</option><option>250 et plus</option></select></div>
+          <div class="field"><label for="communeE">Commune *</label>
+            <select id="communeE" aria-describedby="erre"><option value="">Choisir…</option></select></div>
+        </div>
+        <div class="consent">
+          <label class="choice"><input id="consentE" type="checkbox" aria-describedby="erre"><span>J’accepte que ces informations soient enregistrées pour être recontacté(e) au sujet de ce projet. Elles ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. *</span></label>
+        </div>
+        <p class="err" id="erre" role="status" aria-live="polite"></p>
+        <button class="primary" id="goe" type="submit">Envoyer pour mon entreprise</button>
       </form>
     </div>
   </div>
@@ -187,6 +235,18 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
       <p class="notice" data-reveal>Ce n’est pas une adhésion. La mutuelle n’existe pas encore juridiquement : elle doit être constituée et obtenir les autorisations nécessaires avant de proposer un contrat.</p>
     </section>
 
+    <section class="b2b" aria-labelledby="h-b2b">
+      <h2 class="sec-title" id="h-b2b" data-reveal>Vous êtes un employeur ?</h2>
+      <p class="sec-sub" data-reveal>Nous étudions une formule collective pour les entreprises de La Réunion.</p>
+      <div class="cards">
+        <div class="card" data-reveal><h3>Un avantage pour vos salariés</h3><p>Une couverture obsèques financée en tout ou partie par l’entreprise, qui compte dans votre politique sociale.</p></div>
+        <div class="card" data-reveal><h3>Les parents inclus</h3><p>Une protection qui peut s’étendre aux parents des salariés, là où le besoin est le plus concret.</p></div>
+        <div class="card" data-reveal><h3>Simple à mettre en place</h3><p>Une seule démarche pour l’entreprise, sans gestion lourde. Les conditions restent à définir avec vous.</p></div>
+      </div>
+      <button type="button" class="cta" id="toB2B" data-reveal>Parler de mon entreprise</button>
+      <p class="small" style="margin-top:12px" data-reveal>Étude en cours : aucune offre ni tarif entreprise n’est encore proposé.</p>
+    </section>
+
     <section class="admin" id="admin" hidden aria-labelledby="h-admin">
       <h2 id="h-admin">Pré-inscrits <span id="count" class="small"></span></h2>
       <div class="tablewrap"><table><thead><tr><th>Date</th><th>Prénom</th><th>Nom</th><th>Commune</th><th>Âge</th></tr></thead><tbody id="rows"></tbody></table></div>
@@ -217,8 +277,8 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   setupScrollReveal();
 
   var COMMUNES=["Les Avirons","Bras-Panon","Cilaos","Entre-Deux","L’Étang-Salé","La Plaine-des-Palmistes","La Possession","Le Port","Petite-Île","Saint-André","Saint-Benoît","Saint-Denis","Saint-Joseph","Saint-Leu","Saint-Louis","Saint-Paul","Saint-Philippe","Saint-Pierre","Sainte-Marie","Sainte-Rose","Sainte-Suzanne","Salazie","Le Tampon","Les Trois-Bassins"];
-  var sel=document.getElementById('commune');
-  COMMUNES.forEach(function(c){var o=document.createElement('option');o.textContent=c;sel.appendChild(o);});
+  ['commune','communeE'].forEach(function(id){var sel=document.getElementById(id);
+    COMMUNES.forEach(function(c){var o=document.createElement('option');o.textContent=c;sel.appendChild(o);});});
 
   /* Estimateur de cotisation */
   var GRID=[['25–34 ans',40,45,55],['35–44 ans',50,60,75],['45–54 ans',70,90,115],['55–64 ans',95,125,165],['65–74 ans',125,165,220],['75–79 ans',155,210,280]];
@@ -251,7 +311,8 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   f.addEventListener('submit',async function(e){
     e.preventDefault();
     say('');
-    var rec={prenom:$('prenom').value.trim(),nom:$('nom').value.trim(),commune:$('commune').value,age:$('age').value};
+    var pour=(document.querySelector('input[name=pour]:checked')||{}).value||'moi';
+    var rec={prenom:$('prenom').value.trim(),nom:$('nom').value.trim(),commune:$('commune').value,age:$('age').value,pour:pour};
     if(!rec.prenom){say('Indiquez votre prénom.');$('prenom').focus();return}
     if(!rec.nom){say('Indiquez votre nom.');$('nom').focus();return}
     if(!rec.commune){say('Choisissez votre commune.');$('commune').focus();return}
@@ -263,7 +324,7 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
     rec.consent=true;rec.createdAt=new Date().toISOString();
     try{
       if(SB){
-        var r=await fetch(SB.url+'/rest/v1/preinscriptions',{method:'POST',headers:{'apikey':SB.key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({prenom:rec.prenom,nom:rec.nom,commune:rec.commune,age:rec.age,consent:true})});
+        var r=await fetch(SB.url+'/rest/v1/preinscriptions',{method:'POST',headers:{'apikey':SB.key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({prenom:rec.prenom,nom:rec.nom,commune:rec.commune,age:rec.age,pour:rec.pour,consent:true})});
         if(!r.ok)throw new Error('http '+r.status);
         try{localStorage.setItem('preinscrit','1')}catch(e){}
       }else{
@@ -274,6 +335,52 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
       go.disabled=false;go.setAttribute('aria-busy','false');go.textContent='Envoyer ma pré-inscription';
       say((x&&x.code==='invalid_argument')?'Votre accès ne permet pas d’enregistrer une pré-inscription.':'L’envoi n’a pas abouti. Réessayez dans un instant.');
     }
+  });
+
+  /* Particulier / Entreprise */
+  var fe=$('fe'),tabP=$('tabP'),tabE=$('tabE');
+  function mode(e){
+    f.hidden=!!e;fe.hidden=!e;
+    tabP.setAttribute('aria-pressed',e?'false':'true');tabE.setAttribute('aria-pressed',e?'true':'false');
+  }
+  tabP.addEventListener('click',function(){mode(false)});
+  tabE.addEventListener('click',function(){mode(true)});
+  $('toB2B').addEventListener('click',function(){mode(true);window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});setTimeout(function(){$('ent').focus({preventScroll:true})},reduce?0:400)});
+
+  /* Moi / mon parent : libellés qui s'adaptent */
+  var CONSENT_MOI='J’accepte que mon nom, mon prénom, ma commune et mon âge soient enregistrés pour mesurer l’intérêt pour ce projet. Ces données ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. *';
+  var CONSENT_PARENT='J’accepte que mon nom, mon prénom, ma commune et la tranche d’âge de mon parent (sans son nom ni son prénom) soient enregistrés pour mesurer l’intérêt pour ce projet. Ces données ne sont ni vendues ni transmises. Je peux demander leur suppression à tout moment auprès du porteur du projet, Dimitri GIGAN. *';
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=pour]'),function(r){r.addEventListener('change',function(){
+    var par=r.value==='parent'&&r.checked;
+    if(!r.checked)return;
+    $('ageLabel').textContent=par?'Âge de votre parent *':'Votre âge *';
+    document.querySelector('#f .consent span').textContent=par?CONSENT_PARENT:CONSENT_MOI;
+  })});
+
+  /* Envoi entreprise */
+  function sayE(msg,info){var e=$('erre');e.className='err'+(info?' info':'');e.textContent=msg}
+  fe.addEventListener('submit',async function(ev){
+    ev.preventDefault();sayE('');
+    var r={entreprise:$('ent').value.trim(),contact:$('contact').value.trim(),email:$('email').value.trim(),effectif:$('effectif').value,commune:$('communeE').value};
+    if(!r.entreprise){sayE('Indiquez le nom de l’entreprise.');$('ent').focus();return}
+    if(!r.contact){sayE('Indiquez votre nom et prénom.');$('contact').focus();return}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(r.email)){sayE('Indiquez un e-mail valide.');$('email').focus();return}
+    if(!r.effectif){sayE('Choisissez le nombre de salariés.');$('effectif').focus();return}
+    if(!r.commune){sayE('Choisissez la commune.');$('communeE').focus();return}
+    if(!$('consentE').checked){sayE('Cochez la case d’accord pour enregistrer ces informations.');$('consentE').focus();return}
+    if(!SB){sayE('L’enregistrement n’est pas disponible pour le moment. Revenez bientôt.',true);return}
+    var b=$('goe');b.disabled=true;b.textContent='Envoi…';sayE('Enregistrement…',true);
+    r.consent=true;
+    try{
+      var res=await fetch(SB.url+'/rest/v1/entreprises',{method:'POST',headers:{'apikey':SB.key,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(r)});
+      if(!res.ok)throw new Error('http '+res.status);
+      var tabs=document.querySelector('.tabs');if(tabs)tabs.hidden=true;
+      fe.hidden=true;
+      var d=document.createElement('div');d.className='done';d.setAttribute('role','status');
+      var h=document.createElement('h2');h.textContent='Merci, c’est enregistré';
+      var pp=document.createElement('p');pp.textContent='Nous reviendrons vers vous pour échanger sur une formule collective. Aucun engagement n’est pris.';
+      d.appendChild(h);d.appendChild(pp);zone.appendChild(d);
+    }catch(x){b.disabled=false;b.textContent='Envoyer pour mon entreprise';sayE('L’envoi n’a pas abouti. Réessayez dans un instant.')}
   });
 
   function fmtDate(iso){try{return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return ''}}
