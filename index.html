@@ -1,5 +1,5 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
-<title>Pré-inscription Mutuelle Obsèques</title>
+<title>Ansanm – Pré-inscription mutuelle obsèques</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
 <style>
@@ -31,7 +31,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16p
 @media (max-width:900px){ .heroGrid{grid-template-columns:minmax(0,1fr);gap:32px;padding-block:32px 40px} }
 
 /* Animation d'ouverture : le logo apparaît en fondu, glisse vers le haut, puis le texte se révèle */
-.logo{display:block;width:64px;height:64px;margin:0 0 28px;color:#fff;
+.logo{display:block;width:84px;height:84px;margin:0 0 28px;color:#fff;
   animation:logo-fondu var(--t-fondu) ease-out both, logo-montee var(--t-montee) cubic-bezier(.65,0,.35,1) calc(var(--t-fondu) + var(--t-pause)) both}
 @keyframes logo-fondu{from{opacity:0}to{opacity:1}}
 @keyframes logo-montee{from{transform:translateY(var(--descente))}to{transform:translateY(0)}}
@@ -41,6 +41,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16p
 .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.8;margin:0 0 16px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;margin:0 0 20px;text-wrap:balance}
 .lead{font-size:clamp(17px,2vw,20px);margin:0;max-width:46ch;opacity:.92}
+.tagline{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(20px,2.6vw,26px);margin:22px 0 0;color:#FFB09C}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 0;padding:0;list-style:none}
 .chips li{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);font-size:14px;font-weight:500}
 
@@ -137,10 +138,11 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
 <header class="hero">
   <div class="wrap heroGrid">
     <div>
-      <svg class="logo" viewBox="0 0 240 240" role="img" aria-label="Logo du projet"><circle cx="120" cy="120" r="108" fill="none" stroke="currentColor" stroke-width="10"/><path d="M120 60 L160 150 H80 Z" fill="#FF6A4D"/><rect x="70" y="164" width="100" height="12" rx="6" fill="currentColor"/></svg>
-      <p class="kicker intro">Prévoyance obsèques · La Réunion</p>
+      <svg class="logo" viewBox="0 0 200 200" role="img" aria-label="Logo Ansanm" fill="none" stroke-linecap="round"><path d="M40 168 Q66 98 100 46" stroke="#fff" stroke-width="26"/><path d="M160 168 Q134 98 100 46" stroke="#BFEDE8" stroke-width="26"/><circle cx="100" cy="128" r="15" fill="#FF6A4D" stroke="none"/></svg>
+      <p class="kicker intro">Mutuelle Ansanm · La Réunion</p>
       <h1 class="intro">Vos proches n’avanceront rien.</h1>
       <p class="lead intro">Nous créons une mutuelle locale qui prend en charge jusqu’à 2 200 € d’obsèques, réglés directement à l’opérateur funéraire de votre commune. Dites-nous si ce projet vous intéresse.</p>
+      <p class="tagline intro">Ansanm, pour les nôtres.</p>
       <ul class="chips intro"><li>Gratuit</li><li>Sans engagement</li><li>Aucun paiement</li></ul>
     </div>
 
@@ -255,7 +257,7 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
   </div>
 </main>
 
-<footer><div class="wrap">Projet porté par Dimitri GIGAN, La Réunion. Les montants sont des hypothèses de travail. Aucune adhésion ni paiement n’est possible à ce stade.</div></footer>
+<footer><div class="wrap">Ansanm est le nom de travail du projet, porté par Dimitri GIGAN, La Réunion. Les montants sont des hypothèses de travail. Aucune adhésion ni paiement n’est possible à ce stade.</div></footer>
 
 <script>
 (function(){
