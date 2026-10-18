@@ -335,6 +335,24 @@ footer nav a:hover{text-decoration-thickness:2px}
   footer nav a{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .25s}
   footer nav a:hover{background-size:100% 3px}
 }
+
+/* ===== Réaction à la souris (octobre 2026) : variables posées par le script, souris seulement ===== */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  /* Bandeau : un faisceau de lumière suit la souris */
+  .hero{--mx:70%;--my:30%;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(255,255,255,.16),transparent 70%),linear-gradient(135deg,var(--hero-a) 0%,var(--hero-b) 55%,var(--hero-c) 100%)}
+  /* Cartes et prix : reflet qui suit le curseur et légère inclinaison */
+  .card,.price:not(.main){transform-style:preserve-3d}
+  .card:hover,.price:not(.main):hover{
+    transform:perspective(800px) translateY(-3px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+    background:radial-gradient(260px circle at var(--cx,50%) var(--cy,50%),color-mix(in srgb,var(--hero-c) 16%,var(--surface)),var(--surface) 70%)}
+  .price.main:hover{transform:perspective(800px) translateY(-4px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+  .card,.price{transition:transform .12s ease-out,box-shadow .25s,background .25s}
+  /* Boutons principaux : légère attraction vers le curseur */
+  button.primary:hover:not(:disabled),.b2b .cta:hover{transform:translate(var(--bx,0px),calc(var(--by,0px) - 1px))}
+  button.primary,.b2b .cta{transition:transform .15s ease-out,box-shadow .2s,filter .15s,background .2s}
+  /* Carte du formulaire : halo discret qui suit la souris */
+  form{background:radial-gradient(360px circle at var(--fx,50%) var(--fy,0%),color-mix(in srgb,var(--hero-c) 9%,var(--surface)),var(--surface) 65%)}
+}
 </style>
 
 <header class="hero">
@@ -657,5 +675,31 @@ footer nav a:hover{text-decoration-thickness:2px}
   })();
 })();
 </script>
+<script>
+/* Réaction à la souris : uniquement avec un pointeur précis et sans « réduire les animations ». Aucun appel externe. */
+(function(){
+  var mq=window.matchMedia&&window.matchMedia('(hover:hover) and (prefers-reduced-motion:no-preference)');
+  if(!mq||!mq.matches)return;
+  var raf=0,job=null;
+  function run(fn){job=fn;if(!raf)raf=requestAnimationFrame(function(){raf=0;var j=job;job=null;j&&j()})}
+  var hero=document.querySelector('.hero');
+  if(hero)hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();run(function(){hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')})});
+  function tilt(el,max){
+    el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      run(function(){el.style.setProperty('--cx',(x*100)+'%');el.style.setProperty('--cy',(y*100)+'%');el.style.setProperty('--ry',((x-.5)*2*max)+'deg');el.style.setProperty('--rx',(-(y-.5)*2*max)+'deg')})});
+    el.addEventListener('pointerleave',function(){el.style.removeProperty('--rx');el.style.removeProperty('--ry')});
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.card,.price'),function(el){tilt(el,4)});
+  function pull(el,max){
+    el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),x=(e.clientX-(r.left+r.width/2))/(r.width/2),y=(e.clientY-(r.top+r.height/2))/(r.height/2);
+      run(function(){el.style.setProperty('--bx',(x*max)+'px');el.style.setProperty('--by',(y*max)+'px')})});
+    el.addEventListener('pointerleave',function(){el.style.removeProperty('--bx');el.style.removeProperty('--by')});
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('button.primary,.b2b .cta'),function(el){pull(el,5)});
+  Array.prototype.forEach.call(document.querySelectorAll('form'),function(f){
+    f.addEventListener('pointermove',function(e){var r=f.getBoundingClientRect();run(function(){f.style.setProperty('--fx',(e.clientX-r.left)+'px');f.style.setProperty('--fy',(e.clientY-r.top)+'px')})})});
+})();
+</script>
+
 
 </body></html>
