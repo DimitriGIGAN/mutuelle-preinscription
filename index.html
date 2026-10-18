@@ -538,6 +538,13 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
 @media (prefers-reduced-motion:no-preference){
   .legal details[open] .legal-corps{animation:deplie .4s cubic-bezier(.16,1,.3,1)}
 }
+
+:root{--lien:#0B6E73}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--lien:#6FDDCB}}
+:root[data-theme="dark"]{--lien:#6FDDCB}
+.btn-autre{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:18px;padding:0 20px;border-radius:999px;background:transparent;color:var(--lien);border:2px solid var(--lien);font:600 15px var(--sans);cursor:pointer}
+.btn-autre:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){.btn-autre{transition:transform .15s,background .2s,color .2s}.btn-autre:hover{transform:translateY(-2px);background:var(--lien);color:var(--surface)}}
 </style>
 
 <header class="hero">
@@ -764,7 +771,7 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
   function say(msg,info){err.className='err'+(info?' info':'');err.textContent=msg}
   var SITE_URL='https://dimitrigigan.github.io/mutuelle-preinscription/';
   var SHARE_TEXT='Je viens de me pré-inscrire à un projet de mutuelle obsèques à La Réunion. C’est gratuit et sans engagement : ';
-  function doneCard(titre,texte,check,partage){
+  function doneCard(titre,texte,check,partage,autre){
     var d=document.createElement('div');d.className='done';d.setAttribute('role','status');
     if(check){
       d.insertAdjacentHTML('beforeend','<svg class="coche-ok" viewBox="0 0 52 52" aria-hidden="true"><circle class="cercle" cx="26" cy="26" r="23"/><path class="trait" d="M15 27l8 8 14-16"/></svg>');
@@ -786,26 +793,33 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
       row.appendChild(wa);row.appendChild(cp);
       d.appendChild(q);d.appendChild(row);
     }
+    if(autre){
+      var au=document.createElement('button');au.type='button';au.className='btn-autre';au.textContent='Inscrire une autre personne';
+      au.addEventListener('click',nouvelle);d.appendChild(au);
+    }
     return d;
   }
   function showDone(name,already){
-    zone.innerHTML='';
+    var ex=zone.querySelector('.done');if(ex)ex.remove();
+    f.hidden=true;$('fe').hidden=true;
     var tabs=document.querySelector('.tabs');if(tabs)tabs.hidden=true;
-    var d=doneCard(already?'Vous êtes déjà pré-inscrit(e)':'Merci '+name+', c’est enregistré','Votre pré-inscription nous aide à montrer que le besoin existe. Aucun paiement n’est demandé et rien ne vous engage.',!already,true);
+    var d=doneCard(already?'Vous êtes déjà pré-inscrit(e)':'Merci '+name+', c’est enregistré','Votre pré-inscription nous aide à montrer que le besoin existe. Aucun paiement n’est demandé et rien ne vous engage.',!already,true,true);
     zone.appendChild(d);
     if(!reduce&&d.animate)d.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});
   }
-  function flag(id){var el=$(id);if(!el)return;el.setAttribute('aria-invalid','true');var fl=el.closest('.field')||el.closest('.consent');
-    if(fl){fl.classList.remove('secoue');void fl.offsetWidth;fl.classList.add('secoue')}el.focus()}
-  function bad(id,msg){say(msg);flag(id)}
-  function badE(id,msg){sayE(msg);flag(id)}
-  function checkField(t){var fl=t.closest&&t.closest('.field');if(!fl)return;
-    var okv=t.tagName==='SELECT'?!!t.value:(t.type==='email'?/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(t.value.trim()):t.value.trim().length>0);
-    fl.classList.toggle('valide',okv)}
-  [f,$('fe')].forEach(function(fm){if(!fm)return;
-    fm.addEventListener('input',function(e){e.target.removeAttribute&&e.target.removeAttribute('aria-invalid');var m=fm===f?err:$('erre');if(m&&m.textContent&&!m.classList.contains('info'))m.textContent=''});
-    fm.addEventListener('change',function(e){e.target.removeAttribute&&e.target.removeAttribute('aria-invalid');var m=fm===f?err:$('erre');if(m&&m.textContent&&!m.classList.contains('info'))m.textContent='';checkField(e.target)});
-    fm.addEventListener('focusout',function(e){checkField(e.target)})});
+  /* Rouvre un formulaire vide pour inscrire une autre personne (parent, conjoint…) */
+  function nouvelle(){
+    var d=zone.querySelector('.done');if(d)d.remove();
+    f.reset();
+    Array.prototype.forEach.call(f.querySelectorAll('.field.valide'),function(x){x.classList.remove('valide')});
+    Array.prototype.forEach.call(f.querySelectorAll('[aria-invalid]'),function(x){x.removeAttribute('aria-invalid')});
+    $('ageLabel').textContent='Votre âge *';
+    var cs=document.querySelector('#f .consent span');if(cs)cs.innerHTML=CONSENT_MOI;
+    go.disabled=false;go.removeAttribute('aria-busy');go.textContent='Envoyer ma pré-inscription';say('');
+    var tabs=document.querySelector('.tabs');if(tabs)tabs.hidden=false;
+    mode(false);
+    $('prenom').focus({preventScroll:true});
+  }
   function showUnavailable(){
     go.disabled=true;
     say('L’enregistrement des pré-inscriptions n’est pas disponible depuis ce lien pour le moment. Revenez bientôt.',true);
