@@ -292,8 +292,8 @@ footer nav a:hover{text-decoration-thickness:2px}
 /* ===== Effets au survol (octobre 2026) : souris seulement, coupés avec « réduire les animations » ===== */
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   /* Logo : léger balancement */
-  .logo{transition:transform .5s cubic-bezier(.34,1.56,.64,1);transform-origin:50% 90%}
-  .logo:hover{transform:rotate(-6deg) scale(1.06)}
+  .logo{transition:rotate .5s cubic-bezier(.34,1.56,.64,1),scale .5s cubic-bezier(.34,1.56,.64,1);transform-origin:50% 90%}
+  .logo:hover{rotate:-6deg;scale:1.06}
 
   /* Engagements du bandeau : le point grossit */
   .chips li::before{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
@@ -354,9 +354,46 @@ footer nav a:hover{text-decoration-thickness:2px}
   /* Carte du formulaire : halo discret qui suit la souris */
   form{background:radial-gradient(360px circle at var(--fx,50%) var(--fy,0%),color-mix(in srgb,var(--hero-c) 9%,var(--surface)),var(--surface) 65%)}
 }
+
+/* ===== Plus de vie (octobre 2026) : mouvements continus et réponses aux gestes, coupés avec « réduire les animations » ===== */
+@media (prefers-reduced-motion:no-preference){
+  /* Vagues : deux nappes qui défilent en sens contraire au bas du bandeau */
+  .vagues{position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;z-index:0;overflow:hidden}
+  .vagues::before,.vagues::after{content:"";position:absolute;left:0;right:0;bottom:0;background-repeat:repeat-x}
+  .vagues::before{height:100px;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100'%3E%3Cpath d='M0 50Q150 10 300 50T600 50T900 50T1200 50V100H0Z' fill='%23fff'/%3E%3C/svg%3E");background-size:1200px 100px;animation:vague-a 26s linear infinite}
+  .vagues::after{height:80px;opacity:.1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 80'%3E%3Cpath d='M0 40Q112 4 225 40T450 40T675 40T900 40V80H0Z' fill='%23BFEDE8'/%3E%3C/svg%3E");background-size:900px 80px;animation:vague-b 19s linear infinite}
+  @keyframes vague-a{to{background-position-x:-1200px}}
+  @keyframes vague-b{to{background-position-x:900px}}
+
+  /* Bulles : de petits cercles montent lentement dans le bandeau (créés par le script) */
+  .bulle{position:absolute;bottom:-30px;border-radius:50%;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);pointer-events:none;z-index:0;animation:monte linear infinite}
+  @keyframes monte{0%{transform:translate(0,0) scale(.8);opacity:0}12%{opacity:.9}50%{transform:translate(18px,-45vh) scale(1)}100%{transform:translate(-14px,-95vh) scale(1.1);opacity:0}}
+
+  /* Logo : flottement continu après l'arrivée (propriété translate, indépendante de l'animation d'entrée) */
+  .logo{animation:logo-fondu var(--t-fondu) ease-out both,logo-montee var(--t-montee) cubic-bezier(.65,0,.35,1) calc(var(--t-fondu) + var(--t-pause)) both,flotte 6s ease-in-out 4.2s infinite}
+  @keyframes flotte{0%,100%{translate:0 0}50%{translate:0 -7px}}
+
+  /* Bouton principal : un anneau de lumière attire l'œil toutes les quelques secondes */
+  #f button.primary{animation:rangee .6s cubic-bezier(.16,1,.3,1) 3.4s both,anneau 3.8s ease-out 6.5s infinite}
+  @keyframes anneau{0%{box-shadow:0 10px 24px -10px rgba(255,106,77,.8),0 0 0 0 rgba(255,106,77,.5)}70%,100%{box-shadow:0 10px 24px -10px rgba(255,106,77,.8),0 0 0 16px rgba(255,106,77,0)}}
+
+  /* Onde au clic */
+  .age,.tabs button,.b2b .cta,button.primary{position:relative;overflow:hidden}
+  .onde{position:absolute;border-radius:50%;width:12px;height:12px;margin:-6px 0 0 -6px;background:currentColor;opacity:.28;transform:scale(1);pointer-events:none;animation:onde .6s ease-out forwards}
+  button.primary .onde{background:#fff;opacity:.5}
+  @keyframes onde{to{transform:scale(var(--taille,30));opacity:0}}
+
+  /* Arrivée des cartes au défilement : plus de relief, et le survol reste vif une fois visibles */
+  .js [data-reveal]{transform:translateY(28px) scale(.97)}
+  .js [data-reveal].is-visible{transform:translate3d(0,0,0) scale(1)}
+  :root.js .card.is-visible,:root.js .price.is-visible{transition:transform .15s ease-out,opacity .5s,box-shadow .25s,background .25s}
+  .sec-title{background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 3px no-repeat;padding-bottom:6px;transition:background-size .8s cubic-bezier(.16,1,.3,1) .2s}
+  .sec-title.is-visible{background-size:64px 3px}
+}
 </style>
 
 <header class="hero">
+  <div class="vagues" aria-hidden="true"></div>
   <div class="wrap heroGrid">
     <div>
       <svg class="logo" viewBox="0 0 200 200" role="img" aria-label="Logo du projet" fill="none" stroke-linecap="round"><path d="M40 168 Q66 98 100 46" stroke="#fff" stroke-width="26"/><path d="M160 168 Q134 98 100 46" stroke="#BFEDE8" stroke-width="26"/><circle cx="100" cy="128" r="15" fill="#FF6A4D" stroke="none"/></svg>
@@ -524,7 +561,7 @@ footer nav a:hover{text-decoration-thickness:2px}
     if(reduce||!('IntersectionObserver' in window)){targets.forEach(function(t){t.classList.add('is-visible')});return}
     document.documentElement.classList.add('js');
     var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){if(!en.isIntersecting)return;en.target.classList.add('is-visible');io.unobserve(en.target)});
+      entries.forEach(function(en){if(!en.isIntersecting)return;var t=en.target,i=Array.prototype.indexOf.call(t.parentNode.children,t);t.style.transitionDelay=Math.min(i,4)*90+'ms';t.classList.add('is-visible');setTimeout(function(){t.style.transitionDelay=''},1400);io.unobserve(t)});
     },{root:null,rootMargin:'0px 0px -10% 0px',threshold:0.1});
     targets.forEach(function(t){io.observe(t)});
     /* sécurité : si rien n'a bougé après 4 s, tout devient visible */
@@ -538,10 +575,13 @@ footer nav a:hover{text-decoration-thickness:2px}
 
   /* Estimateur de cotisation */
   var GRID=[['25–34 ans',40,45,55],['35–44 ans',50,60,75],['45–54 ans',70,90,115],['55–64 ans',95,125,165],['65–74 ans',125,165,220],['75–79 ans',155,210,280]];
+  function tween(id,to){var el=document.getElementById(id),from=parseInt(el.textContent,10);
+    if(reduce||!started||isNaN(from)||from===to){el.textContent=to;return}
+    var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/500),e=1-Math.pow(1-k,3);el.textContent=Math.round(from+(to-from)*e);if(k<1)requestAnimationFrame(f)})(t0)}
   var agesEl=document.getElementById('ages');
   function pick(i){
     Array.prototype.forEach.call(agesEl.children,function(b,j){b.setAttribute('aria-pressed',j===i?'true':'false')});
-    document.getElementById('p1').textContent=GRID[i][1];document.getElementById('p2').textContent=GRID[i][2];document.getElementById('p3').textContent=GRID[i][3];
+    tween('p1',GRID[i][1]);tween('p2',GRID[i][2]);tween('p3',GRID[i][3]);
     if(started){var pr=document.querySelector('.prices');pr.classList.remove('change');void pr.offsetWidth;pr.classList.add('change')}
   }
   GRID.forEach(function(g,i){var b=document.createElement('button');b.type='button';b.className='age';b.textContent=g[0];b.setAttribute('aria-pressed','false');b.addEventListener('click',function(){pick(i)});agesEl.appendChild(b)});
@@ -701,6 +741,29 @@ footer nav a:hover{text-decoration-thickness:2px}
     f.addEventListener('pointermove',function(e){var r=f.getBoundingClientRect();run(function(){f.style.setProperty('--fx',(e.clientX-r.left)+'px');f.style.setProperty('--fy',(e.clientY-r.top)+'px')})})});
 })();
 </script>
+<script>
+/* Vie du bandeau : bulles qui montent et ondes au clic. Rien si « réduire les animations » est demandé. */
+(function(){
+  if(!window.matchMedia||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var hero=document.querySelector('.hero');
+  if(hero){
+    var n=window.innerWidth<700?6:12;
+    for(var i=0;i<n;i++){var b=document.createElement('span'),d=10+Math.random()*26;
+      b.className='bulle';b.setAttribute('aria-hidden','true');
+      b.style.cssText='left:'+(Math.random()*100)+'%;width:'+d+'px;height:'+d+'px;animation-duration:'+(14+Math.random()*16)+'s;animation-delay:'+(-Math.random()*20)+'s';
+      hero.appendChild(b)}
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest&&e.target.closest('.age,.tabs button,.b2b .cta,button.primary');
+    if(!el||el.disabled)return;
+    var r=el.getBoundingClientRect(),o=document.createElement('span');
+    o.className='onde';o.style.left=(e.clientX-r.left)+'px';o.style.top=(e.clientY-r.top)+'px';
+    o.style.setProperty('--taille',Math.ceil(Math.max(r.width,r.height)/6)*2.2);
+    el.appendChild(o);setTimeout(function(){o.remove()},700);
+  });
+})();
+</script>
+
 
 
 </body></html>
