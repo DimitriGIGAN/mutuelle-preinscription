@@ -150,14 +150,16 @@ footer nav{margin-top:10px;display:flex;gap:18px;flex-wrap:wrap}
 footer nav a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
 /* ===== Raffinements visuels (octobre 2026) : surcouche, le contenu et le script ne changent pas ===== */
-:root{--radius:18px;--ring:0 0 0 4px color-mix(in srgb,var(--focus) 22%,transparent)}
+:root{--field-border:#6F8D95;--err:#B8381F;--radius:18px;--ring:0 0 0 4px color-mix(in srgb,var(--focus) 22%,transparent)}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 :target{scroll-margin-top:24px}
 a{color:#0B6E73;text-decoration-thickness:1px;text-underline-offset:3px}
 a:hover{text-decoration-thickness:2px}
 a:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:3px}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a{color:#6FDDCB}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--field-border:#7AA0AB;--err:#FF7A5F}:root:not([data-theme="light"]) a{color:#6FDDCB}}
+:root[data-theme="dark"]{--field-border:#7AA0AB;--err:#FF7A5F}
+.err{color:var(--err)}
 :root[data-theme="dark"] a{color:#6FDDCB}
 
 /* Bandeau : horizon courbe, lumière plus douce, texte plus posé */
@@ -184,13 +186,13 @@ form{border-radius:26px;padding:32px;box-shadow:0 1px 0 rgba(255,255,255,.6) ins
 form h2{font-size:26px}
 @media (max-width:520px){form{padding:22px;border-radius:22px}}
 label{font-size:15px}
-input[type=text],input[type=email],select{background:var(--surface);border:1.5px solid #B9CBCF;border-radius:14px;min-height:52px;box-shadow:0 1px 2px rgba(6,47,58,.05)}
-input[type=text]:hover,input[type=email]:hover,select:hover{border-color:#7FA0A6}
+input[type=text],input[type=email],select{background:var(--surface);border:1.5px solid var(--field-border);border-radius:14px;min-height:52px;box-shadow:0 1px 2px rgba(6,47,58,.05)}
+input[type=text]:hover,input[type=email]:hover,select:hover{border-color:var(--ink)}
 input[type=text]:focus,input[type=email]:focus,select:focus{border-color:var(--focus);box-shadow:var(--ring);outline:none}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) input[type=text],:root:not([data-theme="light"]) input[type=email],:root:not([data-theme="light"]) select{background:var(--soft);border-color:#3A6370}}
-:root[data-theme="dark"] input[type=text],:root[data-theme="dark"] input[type=email],:root[data-theme="dark"] select{background:var(--soft);border-color:#3A6370}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) input[type=text],:root:not([data-theme="light"]) input[type=email],:root:not([data-theme="light"]) select{background:var(--soft);border-color:var(--field-border)}}
+:root[data-theme="dark"] input[type=text],:root[data-theme="dark"] input[type=email],:root[data-theme="dark"] select{background:var(--soft);border-color:var(--field-border)}
 select{cursor:pointer}
-.who label{border:1.5px solid #B9CBCF;border-radius:14px}
+.who label{border:1.5px solid var(--field-border);border-radius:14px}
 .who label:has(input:checked){border-color:var(--focus);background:var(--soft);box-shadow:var(--ring)}
 .who label:has(input:focus-visible){box-shadow:var(--ring)}
 .choice{align-items:start;grid-template-columns:24px minmax(0,1fr);color:var(--ink);font-size:14px;line-height:1.55}
@@ -213,7 +215,7 @@ main .wrap{padding-block:72px 64px}
 .b2b .cards>.card:first-child{border-top:1px solid var(--line)}
 
 /* Prix : la formule centrale ressort */
-.age{border:1.5px solid #B9CBCF;min-height:46px;padding:10px 20px;transition:background .15s,border-color .15s}
+.age{border:1.5px solid var(--field-border);min-height:46px;padding:10px 20px;transition:background .15s,border-color .15s}
 .age:hover{border-color:var(--focus)}
 .age:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .prices{align-items:stretch}
