@@ -288,6 +288,53 @@ footer nav a:hover{text-decoration-thickness:2px}
   #f button.primary::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:reflet 1.1s ease-out 4.1s 1 both;pointer-events:none}
   @keyframes reflet{to{transform:translateX(120%)}}
 }
+
+/* ===== Effets au survol (octobre 2026) : souris seulement, coupés avec « réduire les animations » ===== */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  /* Logo : léger balancement */
+  .logo{transition:transform .5s cubic-bezier(.34,1.56,.64,1);transform-origin:50% 90%}
+  .logo:hover{transform:rotate(-6deg) scale(1.06)}
+
+  /* Engagements du bandeau : le point grossit */
+  .chips li::before{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+  .chips li:hover::before{transform:scale(1.6)}
+
+  /* Onglets : fond clair au survol de l'onglet inactif */
+  .tabs button[aria-pressed="false"]:hover{background:rgba(255,255,255,.2);color:#fff}
+
+  /* Choix Moi-même / Mon parent et boutons d'âge : montée et contour */
+  .who label:hover{border-color:var(--focus);transform:translateY(-2px);box-shadow:0 8px 18px -12px rgba(6,47,58,.5)}
+  .age:hover{transform:translateY(-2px);background:var(--soft);box-shadow:0 8px 18px -12px rgba(6,47,58,.5)}
+  .age[aria-pressed="true"]:hover{background:var(--ink)}
+
+  /* Champs : le libellé prend la couleur d'accent quand on survole son champ */
+  .field:hover>label{color:#0B6E73}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .field:hover>label{color:#6FDDCB}}
+  :root[data-theme="dark"] .field:hover>label{color:#6FDDCB}
+  label{transition:color .2s}
+
+  /* Cartes : l'icône pivote et se remplit, le titre s'éclaire */
+  .card .ico{transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .25s,color .25s}
+  .card:hover .ico{transform:rotate(-8deg) scale(1.12);background:#0B6E73;color:#fff}
+  .card h3{transition:color .2s}
+  .card:hover h3{color:#0B6E73}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card:hover h3{color:#6FDDCB}:root:not([data-theme="light"]) .card:hover .ico{background:#6FDDCB;color:#062F3A}}
+  :root[data-theme="dark"] .card:hover h3{color:#6FDDCB}
+  :root[data-theme="dark"] .card:hover .ico{background:#6FDDCB;color:#062F3A}
+
+  /* Formule centrale : monte aussi au survol */
+  .price.main{transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s}
+  .price.main:hover{transform:translateY(-4px);box-shadow:0 30px 50px -22px rgba(6,47,58,.7)}
+
+  /* Bouton entreprise : s'éclaircit et monte */
+  .b2b .cta{transition:transform .2s,background .2s,box-shadow .2s}
+  .b2b .cta:hover{background:#0B5563;color:#fff;box-shadow:0 12px 22px -12px rgba(6,47,58,.7)}
+
+  /* Liens : le soulignement s'épaissit en glissant */
+  a{transition:text-decoration-thickness .15s,color .15s}
+  footer nav a{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .25s}
+  footer nav a:hover{background-size:100% 3px}
+}
 </style>
 
 <header class="hero">
