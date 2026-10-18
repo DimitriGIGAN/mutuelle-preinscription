@@ -342,14 +342,15 @@ footer nav a:hover{text-decoration-thickness:2px}
   .hero{--mx:70%;--my:30%;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(255,255,255,.16),transparent 70%),linear-gradient(135deg,var(--hero-a) 0%,var(--hero-b) 55%,var(--hero-c) 100%)}
   /* Cartes et prix : reflet qui suit le curseur et légère inclinaison */
   .card,.price:not(.main){transform-style:preserve-3d}
-  .card:hover,.price:not(.main):hover{
+  :root.js .card.is-visible:hover,:root.js .price:not(.main).is-visible:hover{
     transform:perspective(800px) translateY(-3px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
     background:radial-gradient(260px circle at var(--cx,50%) var(--cy,50%),color-mix(in srgb,var(--hero-c) 16%,var(--surface)),var(--surface) 70%)}
-  .price.main:hover{transform:perspective(800px) translateY(-4px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+  :root.js .price.main.is-visible:hover{transform:perspective(800px) translateY(-4px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+  .card:hover,.price:not(.main):hover{background:radial-gradient(260px circle at var(--cx,50%) var(--cy,50%),color-mix(in srgb,var(--hero-c) 16%,var(--surface)),var(--surface) 70%)}
   .card,.price{transition:transform .12s ease-out,box-shadow .25s,background .25s}
   /* Boutons principaux : légère attraction vers le curseur */
-  button.primary:hover:not(:disabled),.b2b .cta:hover{transform:translate(var(--bx,0px),calc(var(--by,0px) - 1px))}
-  button.primary,.b2b .cta{transition:transform .15s ease-out,box-shadow .2s,filter .15s,background .2s}
+  button.primary:hover:not(:disabled),.b2b .cta:hover{translate:var(--bx,0px) var(--by,0px)}
+  button.primary,.b2b .cta{transition:transform .15s ease-out,translate .15s ease-out,box-shadow .2s,filter .15s,background .2s}
   /* Carte du formulaire : halo discret qui suit la souris */
   form{background:radial-gradient(360px circle at var(--fx,50%) var(--fy,0%),color-mix(in srgb,var(--hero-c) 9%,var(--surface)),var(--surface) 65%)}
 }
@@ -680,8 +681,8 @@ footer nav a:hover{text-decoration-thickness:2px}
 (function(){
   var mq=window.matchMedia&&window.matchMedia('(hover:hover) and (prefers-reduced-motion:no-preference)');
   if(!mq||!mq.matches)return;
-  var raf=0,job=null;
-  function run(fn){job=fn;if(!raf)raf=requestAnimationFrame(function(){raf=0;var j=job;job=null;j&&j()})}
+  var raf=0,jobs=[];
+  function run(fn){jobs.push(fn);if(!raf)raf=requestAnimationFrame(function(){raf=0;var q=jobs;jobs=[];q.forEach(function(j){j()})})}
   var hero=document.querySelector('.hero');
   if(hero)hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();run(function(){hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')})});
   function tilt(el,max){
