@@ -1,5 +1,18 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pré-inscription – Projet de mutuelle obsèques, La Réunion</title>
+<meta name="description" content="Une mutuelle locale pour que vos proches n’avancent rien le jour des obsèques. Pré-inscription gratuite, sans engagement, sans paiement.">
+<meta name="theme-color" content="#062F3A">
+<link rel="canonical" href="https://dimitrigigan.github.io/mutuelle-preinscription/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website"><meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Vos proches n’avanceront rien. Pré-inscription au projet de mutuelle obsèques">
+<meta property="og:description" content="Une mutuelle locale pour que vos proches n’avancent rien le jour des obsèques. Pré-inscription gratuite, sans engagement, sans paiement.">
+<meta property="og:url" content="https://dimitrigigan.github.io/mutuelle-preinscription/">
+<meta property="og:image" content="https://dimitrigigan.github.io/mutuelle-preinscription/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vos proches n’avanceront rien. Projet de mutuelle · La Réunion">
+<meta name="twitter:card" content="summary_large_image">
+</head><body>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 @font-face{font-family:'Sora';font-weight:500;font-style:normal;font-display:swap;src:url(fonts/sora-latin-500-normal.woff2) format('woff2')}
@@ -452,6 +465,63 @@ footer nav a:hover{text-decoration-thickness:2px}
   .curseur-actif .curseur-point,.curseur-actif .curseur-anneau{opacity:1}
   .curseur-anneau.sur{width:60px;height:60px;margin:-30px 0 0 -30px;background:rgba(255,106,77,.14)}
 }
+
+/* ===== Aperçu, remerciement, FAQ, validation (octobre 2026) ===== */
+/* Validation */
+.field{position:relative}
+.field.valide::after{content:"";position:absolute;right:14px;bottom:17px;width:18px;height:18px;background:var(--ok);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E") center/contain no-repeat;pointer-events:none}
+.field.valide select{padding-right:64px}
+.field.valide input[type=text],.field.valide input[type=email]{padding-right:42px}
+.field.valide select ~ *{}
+.field.valide:has(select)::after{right:42px}
+input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--err);box-shadow:0 0 0 4px color-mix(in srgb,var(--err) 18%,transparent)}
+.consent:has([aria-invalid="true"]){outline:2px solid var(--err);outline-offset:6px;border-radius:10px}
+@media (prefers-reduced-motion:no-preference){
+  .field.valide::after{animation:coche-pop .4s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes coche-pop{from{transform:scale(0) rotate(-30deg)}to{transform:none}}
+  .secoue{animation:secoue .4s ease-in-out}
+  @keyframes secoue{0%,100%{translate:0}20%{translate:-7px}40%{translate:6px}60%{translate:-4px}80%{translate:3px}}
+}
+/* Remerciement */
+.done .coche-ok{width:64px;height:64px;display:block;margin:0 0 14px}
+.coche-ok .cercle{fill:color-mix(in srgb,var(--ok) 14%,var(--surface));stroke:var(--ok);stroke-width:2.5}
+.coche-ok .trait{fill:none;stroke:var(--ok);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.done .partage-t{margin-top:20px;color:var(--muted);font-size:15px}
+.partage{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.btn-partage,.btn-copie{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:999px;font:600 15px var(--sans);cursor:pointer;text-decoration:none}
+.btn-partage{background:var(--ink);color:var(--bg);border:2px solid var(--ink)}
+.btn-copie{background:transparent;color:var(--ink);border:2px solid var(--field-border)}
+.btn-partage:focus-visible,.btn-copie:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){
+  .coche-ok .cercle{stroke-dasharray:145;stroke-dashoffset:145;animation:trace .7s ease-out .1s forwards}
+  .coche-ok .trait{stroke-dasharray:40;stroke-dashoffset:40;animation:trace .45s ease-out .65s forwards}
+  @keyframes trace{to{stroke-dashoffset:0}}
+  .done .coche-ok{animation:rebond .6s cubic-bezier(.34,1.56,.64,1) 1s}
+  @keyframes rebond{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+  .btn-partage,.btn-copie{transition:transform .15s,background .2s,color .2s}
+  .btn-partage:hover,.btn-copie:hover{transform:translateY(-2px)}
+}
+@media (prefers-reduced-motion:reduce){.coche-ok .cercle,.coche-ok .trait{stroke-dasharray:none;stroke-dashoffset:0}}
+/* FAQ */
+.faq{margin-top:72px}
+.faq-liste{display:grid;gap:10px;max-width:760px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;padding:18px 22px;font:600 17px/1.35 var(--display);min-height:56px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:12px;height:12px;border-right:2.5px solid var(--ok);border-bottom:2.5px solid var(--ok);transform:rotate(45deg) translateY(-3px);transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(-135deg) translateY(-3px)}
+.faq summary:focus-visible{outline:3px solid var(--focus);outline-offset:-3px;border-radius:var(--radius)}
+.faq .rep{padding:0 22px 20px}
+.faq .rep p{margin:0;color:var(--muted);font-size:16px;line-height:1.65;max-width:62ch}
+@media (prefers-reduced-motion:no-preference){
+  .faq details[open] .rep{animation:deplie .4s cubic-bezier(.16,1,.3,1)}
+  @keyframes deplie{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+  .faq details{transition:box-shadow .2s,border-color .2s}
+  .faq details:hover{border-color:var(--field-border)}
+  .faq details[open]{box-shadow:0 12px 26px -18px rgba(6,47,58,.5)}
+}
 </style>
 
 <header class="hero">
@@ -563,6 +633,20 @@ footer nav a:hover{text-decoration-thickness:2px}
       <p class="notice" data-reveal>Ce n’est pas une adhésion. La mutuelle n’existe pas encore juridiquement : elle doit être constituée et obtenir les autorisations nécessaires avant de proposer un contrat.</p>
     </section>
 
+
+    <section class="faq" aria-labelledby="h-faq">
+      <h2 class="sec-title" id="h-faq" data-reveal>Vos questions</h2>
+      <p class="sec-sub" data-reveal>Les réponses aux doutes les plus fréquents.</p>
+      <div class="faq-liste" data-reveal>
+        <details><summary>Est-ce une adhésion&nbsp;?</summary><div class="rep"><p>Non. La pré-inscription sert à montrer que le besoin existe. Aucun paiement n’est demandé et rien ne vous engage. La mutuelle n’existe pas encore juridiquement.</p></div></details>
+        <details><summary>Que se passe-t-il si la mutuelle ne se crée pas&nbsp;?</summary><div class="rep"><p>Vous ne devez rien. Vos informations ne servent qu’à mesurer l’intérêt pour le projet : elles sont supprimées au plus tard 24 mois après votre pré-inscription.</p></div></details>
+        <details><summary>Pourquoi une carence de 12 mois&nbsp;?</summary><div class="rep"><p>C’est un principe courant en prévoyance obsèques : la couverture démarre après un délai, pour que la solidarité entre adhérents reste équitable. Les conditions définitives seront confirmées avant toute adhésion.</p></div></details>
+        <details><summary>Les montants sont-ils définitifs&nbsp;?</summary><div class="rep"><p>Non. Ils sont indicatifs et doivent être validés par une étude actuarielle avant toute offre.</p></div></details>
+        <details><summary>Que deviennent mes informations&nbsp;?</summary><div class="rep"><p>Votre prénom, votre nom, votre commune et votre tranche d’âge sont enregistrés dans l’Union européenne. Ils ne sont ni vendus ni transmis. Vous pouvez demander leur suppression à tout moment : voir la <a href="#confidentialite">politique de confidentialité</a>.</p></div></details>
+        <details><summary>Puis-je inscrire mon père ou ma mère&nbsp;?</summary><div class="rep"><p>Oui, avec le choix « Mon parent ». Nous ne demandons alors ni son nom ni son prénom, seulement sa tranche d’âge et sa commune.</p></div></details>
+      </div>
+    </section>
+
     <section class="b2b" aria-labelledby="h-b2b">
       <h2 class="sec-title" id="h-b2b" data-reveal>Vous êtes un employeur ?</h2>
       <p class="sec-sub" data-reveal>Nous étudions une formule collective pour les entreprises de La Réunion.</p>
@@ -608,7 +692,7 @@ footer nav a:hover{text-decoration-thickness:2px}
 <h3>Pourquoi, et sur quelle base ?</h3>
 <p>Uniquement pour mesurer l’intérêt pour le projet et, pour les entreprises, être recontacté au sujet de ce projet. La base est votre consentement, donné en cochant la case du formulaire. Vos données ne sont ni vendues, ni transmises à des tiers à des fins commerciales.</p>
 <h3>Qui y a accès ?</h3>
-<p>Le porteur du projet. Le prestataire technique Supabase les héberge pour son compte, au sein de l’Union européenne (Irlande). Le site est servi par GitHub Pages ; ce site n’utilise ni cookie, ni outil de mesure d’audience, ni police chargée depuis un serveur tiers.</p>
+<p>Le porteur du projet. Le prestataire technique Supabase les héberge pour son compte, au sein de l’Union européenne (Irlande). Le site est servi par GitHub Pages ; ce site n’utilise ni cookie, ni outil de mesure d’audience, ni police chargée depuis un serveur tiers. Après l’envoi, le bouton « Prévenir un proche sur WhatsApp » n’ouvre WhatsApp que si vous cliquez dessus : le site ne transmet alors aucune de vos informations, seulement l’adresse du site.</p>
 <h3>Combien de temps ?</h3>
 <p>Les données sont conservées au plus 24 mois après la pré-inscription, ou jusqu’à la création de la mutuelle si vous acceptez alors d’être contacté(e), puis supprimées.</p>
 <h3>Vos droits</h3>
@@ -662,14 +746,50 @@ footer nav a:hover{text-decoration-thickness:2px}
   var db=null,user=null,uid=null;
   function $(id){return document.getElementById(id)}
   function say(msg,info){err.className='err'+(info?' info':'');err.textContent=msg}
+  var SITE_URL='https://dimitrigigan.github.io/mutuelle-preinscription/';
+  var SHARE_TEXT='Je viens de me pré-inscrire à un projet de mutuelle obsèques à La Réunion. C’est gratuit et sans engagement : ';
+  function doneCard(titre,texte,check,partage){
+    var d=document.createElement('div');d.className='done';d.setAttribute('role','status');
+    if(check){
+      d.insertAdjacentHTML('beforeend','<svg class="coche-ok" viewBox="0 0 52 52" aria-hidden="true"><circle class="cercle" cx="26" cy="26" r="23"/><path class="trait" d="M15 27l8 8 14-16"/></svg>');
+    }
+    var h=document.createElement('h2');h.textContent=titre;
+    var p=document.createElement('p');p.textContent=texte;
+    d.appendChild(h);d.appendChild(p);
+    if(partage){
+      var q=document.createElement('p');q.className='partage-t';q.textContent='Une personne de votre entourage pourrait être concernée ? Prévenez-la en un geste.';
+      var row=document.createElement('div');row.className='partage';
+      var wa=document.createElement('a');wa.className='btn-partage';wa.target='_blank';wa.rel='noopener';
+      wa.href='https://wa.me/?text='+encodeURIComponent(SHARE_TEXT+SITE_URL);wa.textContent='Prévenir un proche sur WhatsApp';
+      var cp=document.createElement('button');cp.type='button';cp.className='btn-copie';cp.textContent='Copier le lien';
+      cp.addEventListener('click',function(){
+        function ok(){cp.textContent='Lien copié';setTimeout(function(){cp.textContent='Copier le lien'},2200)}
+        function fallback(){var t=document.createElement('textarea');t.value=SITE_URL;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){cp.textContent=SITE_URL}t.remove()}
+        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(SITE_URL).then(ok,fallback)}else{fallback()}
+      });
+      row.appendChild(wa);row.appendChild(cp);
+      d.appendChild(q);d.appendChild(row);
+    }
+    return d;
+  }
   function showDone(name,already){
     zone.innerHTML='';
-    var d=document.createElement('div');d.className='done';d.setAttribute('role','status');
-    var h=document.createElement('h2');h.textContent=already?'Vous êtes déjà pré-inscrit(e)':'Merci '+name+', c’est enregistré';
-    var p=document.createElement('p');p.textContent='Votre pré-inscription nous aide à montrer que le besoin existe. Aucun paiement n’est demandé et rien ne vous engage.';
-    d.appendChild(h);d.appendChild(p);zone.appendChild(d);
+    var tabs=document.querySelector('.tabs');if(tabs)tabs.hidden=true;
+    var d=doneCard(already?'Vous êtes déjà pré-inscrit(e)':'Merci '+name+', c’est enregistré','Votre pré-inscription nous aide à montrer que le besoin existe. Aucun paiement n’est demandé et rien ne vous engage.',!already,true);
+    zone.appendChild(d);
     if(!reduce&&d.animate)d.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});
   }
+  function flag(id){var el=$(id);if(!el)return;el.setAttribute('aria-invalid','true');var fl=el.closest('.field')||el.closest('.consent');
+    if(fl){fl.classList.remove('secoue');void fl.offsetWidth;fl.classList.add('secoue')}el.focus()}
+  function bad(id,msg){say(msg);flag(id)}
+  function badE(id,msg){sayE(msg);flag(id)}
+  function checkField(t){var fl=t.closest&&t.closest('.field');if(!fl)return;
+    var okv=t.tagName==='SELECT'?!!t.value:(t.type==='email'?/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(t.value.trim()):t.value.trim().length>0);
+    fl.classList.toggle('valide',okv)}
+  [f,$('fe')].forEach(function(fm){if(!fm)return;
+    fm.addEventListener('input',function(e){e.target.removeAttribute&&e.target.removeAttribute('aria-invalid');var m=fm===f?err:$('erre');if(m&&m.textContent&&!m.classList.contains('info'))m.textContent=''});
+    fm.addEventListener('change',function(e){e.target.removeAttribute&&e.target.removeAttribute('aria-invalid');var m=fm===f?err:$('erre');if(m&&m.textContent&&!m.classList.contains('info'))m.textContent='';checkField(e.target)});
+    fm.addEventListener('focusout',function(e){checkField(e.target)})});
   function showUnavailable(){
     go.disabled=true;
     say('L’enregistrement des pré-inscriptions n’est pas disponible depuis ce lien pour le moment. Revenez bientôt.',true);
@@ -679,11 +799,11 @@ footer nav a:hover{text-decoration-thickness:2px}
     say('');
     var pour=(document.querySelector('input[name=pour]:checked')||{}).value||'moi';
     var rec={prenom:$('prenom').value.trim(),nom:$('nom').value.trim(),commune:$('commune').value,age:$('age').value,pour:pour};
-    if(!rec.prenom){say('Indiquez votre prénom.');$('prenom').focus();return}
-    if(!rec.nom){say('Indiquez votre nom.');$('nom').focus();return}
-    if(!rec.commune){say('Choisissez votre commune.');$('commune').focus();return}
-    if(!rec.age){say('Choisissez une tranche d’âge.');$('age').focus();return}
-    if(!$('consent').checked){say('Cochez la case d’accord pour enregistrer vos informations.');$('consent').focus();return}
+    if(!rec.prenom){bad('prenom','Indiquez votre prénom.');return}
+    if(!rec.nom){bad('nom','Indiquez votre nom.');return}
+    if(!rec.commune){bad('commune','Choisissez votre commune.');return}
+    if(!rec.age){bad('age','Choisissez une tranche d’âge.');return}
+    if(!$('consent').checked){bad('consent','Cochez la case d’accord pour enregistrer vos informations.');return}
     if(!SB&&(!db||!uid)){showUnavailable();return}
     go.disabled=true;go.setAttribute('aria-busy','true');go.textContent='Envoi…';say('Enregistrement…',true);
     if(!reduce&&go.animate){try{go.animate([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:180,easing:'ease-out'})}catch(x){}}
@@ -728,12 +848,12 @@ footer nav a:hover{text-decoration-thickness:2px}
   fe.addEventListener('submit',async function(ev){
     ev.preventDefault();sayE('');
     var r={entreprise:$('ent').value.trim(),contact:$('contact').value.trim(),email:$('email').value.trim(),effectif:$('effectif').value,commune:$('communeE').value};
-    if(!r.entreprise){sayE('Indiquez le nom de l’entreprise.');$('ent').focus();return}
-    if(!r.contact){sayE('Indiquez votre nom et prénom.');$('contact').focus();return}
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(r.email)){sayE('Indiquez un e-mail valide.');$('email').focus();return}
-    if(!r.effectif){sayE('Choisissez le nombre de salariés.');$('effectif').focus();return}
-    if(!r.commune){sayE('Choisissez la commune.');$('communeE').focus();return}
-    if(!$('consentE').checked){sayE('Cochez la case d’accord pour enregistrer ces informations.');$('consentE').focus();return}
+    if(!r.entreprise){badE('ent','Indiquez le nom de l’entreprise.');return}
+    if(!r.contact){badE('contact','Indiquez votre nom et prénom.');return}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(r.email)){badE('email','Indiquez un e-mail valide.');return}
+    if(!r.effectif){badE('effectif','Choisissez le nombre de salariés.');return}
+    if(!r.commune){badE('communeE','Choisissez la commune.');return}
+    if(!$('consentE').checked){badE('consentE','Cochez la case d’accord pour enregistrer ces informations.');return}
     if(!SB){sayE('L’enregistrement n’est pas disponible pour le moment. Revenez bientôt.',true);return}
     var b=$('goe');b.disabled=true;b.textContent='Envoi…';sayE('Enregistrement…',true);
     r.consent=true;
@@ -742,10 +862,7 @@ footer nav a:hover{text-decoration-thickness:2px}
       if(!res.ok)throw new Error('http '+res.status);
       var tabs=document.querySelector('.tabs');if(tabs)tabs.hidden=true;
       fe.hidden=true;
-      var d=document.createElement('div');d.className='done';d.setAttribute('role','status');
-      var h=document.createElement('h2');h.textContent='Merci, c’est enregistré';
-      var pp=document.createElement('p');pp.textContent='Nous reviendrons vers vous pour échanger sur une formule collective. Aucun engagement n’est pris.';
-      d.appendChild(h);d.appendChild(pp);zone.appendChild(d);
+      zone.appendChild(doneCard('Merci, c’est enregistré','Nous reviendrons vers vous pour échanger sur une formule collective. Aucun engagement n’est pris.',true,true));
     }catch(x){b.disabled=false;b.textContent='Envoyer pour mon entreprise';sayE('L’envoi n’a pas abouti. Réessayez dans un instant.')}
   });
 
