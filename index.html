@@ -148,6 +148,96 @@ footer .wrap{padding-block:22px 36px;font-size:13px;color:var(--muted)}
 .legal .todo{background:var(--warn-bg);color:var(--warn-ink);padding:1px 6px;border-radius:4px}
 footer nav{margin-top:10px;display:flex;gap:18px;flex-wrap:wrap}
 footer nav a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+/* ===== Raffinements visuels (octobre 2026) : surcouche, le contenu et le script ne changent pas ===== */
+:root{--radius:18px;--ring:0 0 0 4px color-mix(in srgb,var(--focus) 22%,transparent)}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:target{scroll-margin-top:24px}
+a{color:#0B6E73;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:3px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a{color:#6FDDCB}}
+:root[data-theme="dark"] a{color:#6FDDCB}
+
+/* Bandeau : horizon courbe, lumière plus douce, texte plus posé */
+.hero{border-radius:0 0 50% 50% / 0 0 44px 44px}
+.hero::after{right:-160px;top:-160px;width:520px;height:520px;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 62%)}
+.hero::before{content:"";position:absolute;left:-200px;bottom:-260px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(20,144,143,.55),transparent 65%);pointer-events:none}
+.heroGrid{padding-block:56px 88px}
+@media (max-width:900px){.hero{border-radius:0 0 28px 28px}.heroGrid{padding-block:28px 52px}}
+h1{font-size:clamp(34px,5.6vw,60px);line-height:1.04;max-width:14ch}
+.lead{line-height:1.55;max-width:44ch}
+.kicker{opacity:.85}
+
+/* Pastilles -> trois engagements en ligne, repérés par un point corail */
+.chips{gap:10px 22px;margin-top:30px}
+.chips li{padding:0;background:none;border:0;border-radius:0;display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:600}
+.chips li::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+
+/* Onglets et carte formulaire */
+.tabs{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(6px)}
+.tabs button{color:rgba(255,255,255,.88)}
+.tabs button[aria-pressed="true"]{background:#fff;color:var(--hero-a);box-shadow:0 4px 14px -4px rgba(6,47,58,.4)}
+.tabs button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+form{border-radius:26px;padding:32px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 30px 70px -26px rgba(2,24,30,.6),0 0 0 1px rgba(6,47,58,.06)}
+form h2{font-size:26px}
+@media (max-width:520px){form{padding:22px;border-radius:22px}}
+label{font-size:15px}
+input[type=text],input[type=email],select{background:var(--surface);border:1.5px solid #B9CBCF;border-radius:14px;min-height:52px;box-shadow:0 1px 2px rgba(6,47,58,.05)}
+input[type=text]:hover,input[type=email]:hover,select:hover{border-color:#7FA0A6}
+input[type=text]:focus,input[type=email]:focus,select:focus{border-color:var(--focus);box-shadow:var(--ring);outline:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) input[type=text],:root:not([data-theme="light"]) input[type=email],:root:not([data-theme="light"]) select{background:var(--soft);border-color:#3A6370}}
+:root[data-theme="dark"] input[type=text],:root[data-theme="dark"] input[type=email],:root[data-theme="dark"] select{background:var(--soft);border-color:#3A6370}
+select{cursor:pointer}
+.who label{border:1.5px solid #B9CBCF;border-radius:14px}
+.who label:has(input:checked){border-color:var(--focus);background:var(--soft);box-shadow:var(--ring)}
+.who label:has(input:focus-visible){box-shadow:var(--ring)}
+.choice{align-items:start;grid-template-columns:24px minmax(0,1fr);color:var(--ink);font-size:14px;line-height:1.55}
+.choice input{margin:1px 0 0;width:22px;height:22px;accent-color:#0B6E73}
+.consent{border-top:1px dashed var(--line)}
+button.primary{min-height:56px;box-shadow:0 10px 24px -10px rgba(255,106,77,.8);transition:transform .15s,box-shadow .15s,filter .15s}
+button.primary:hover:not(:disabled){filter:none;transform:translateY(-1px);box-shadow:0 14px 28px -10px rgba(255,106,77,.9)}
+button.primary:active:not(:disabled){transform:none}
+@media (prefers-reduced-motion:reduce){button.primary,button.primary:hover:not(:disabled){transform:none}}
+
+/* Contenu : plus d'air, cartes moins uniformes */
+main .wrap{padding-block:72px 64px}
+.sec-title{font-size:clamp(26px,3.6vw,38px)}
+.sec-sub{font-size:17px}
+.card{border-radius:var(--radius);padding:26px;border:1px solid var(--line);box-shadow:0 1px 2px rgba(6,47,58,.04)}
+.card .ico{width:48px;height:48px;border-radius:50%;background:color-mix(in srgb,var(--hero-c) 14%,var(--surface));color:#0B6E73}
+.card h3{font-size:19px}
+.card p{font-size:16px;line-height:1.6}
+.cards>.card:first-child{border-top:4px solid var(--accent)}
+.b2b .cards>.card:first-child{border-top:1px solid var(--line)}
+
+/* Prix : la formule centrale ressort */
+.age{border:1.5px solid #B9CBCF;min-height:46px;padding:10px 20px;transition:background .15s,border-color .15s}
+.age:hover{border-color:var(--focus)}
+.age:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.prices{align-items:stretch}
+.price{border-radius:var(--radius);padding:26px;display:flex;flex-direction:column}
+.price.main{box-shadow:0 24px 44px -22px rgba(6,47,58,.6)}
+@media (min-width:641px){.price.main{margin-block:-10px;padding-block:36px}}
+.price .name{text-transform:none;letter-spacing:0;font-size:16px;font-weight:700;opacity:.85}
+.price .amount{font-size:44px}
+.notice{border-radius:var(--radius);border-left:4px solid #D9A400;padding:18px 20px;font-size:15px;line-height:1.55}
+.b2b .cta{background:var(--ink);transition:transform .15s}
+.b2b .cta:hover{transform:translateY(-1px)}
+@media (prefers-reduced-motion:reduce){.b2b .cta:hover{transform:none}}
+
+/* Pages légales : lecture confortable, hiérarchie claire */
+.legal{background:var(--surface);padding:64px 0}
+.legal + .legal{background:var(--bg)}
+.legal .wrap{max-width:720px}
+.legal h2{font-size:28px;margin-bottom:18px}
+.legal h3{font-size:18px;margin:28px 0 6px}
+.legal p,.legal li{font-size:16px;line-height:1.7}
+.legal li{margin:6px 0}
+footer{background:var(--surface)}
+footer .wrap{line-height:1.6}
+footer nav a:hover{text-decoration-thickness:2px}
 </style>
 
 <header class="hero">
