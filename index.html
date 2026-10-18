@@ -522,6 +522,22 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
   .faq details:hover{border-color:var(--field-border)}
   .faq details[open]{box-shadow:0 12px 26px -18px rgba(6,47,58,.5)}
 }
+
+/* ===== Mentions légales et confidentialité repliées (octobre 2026) ===== */
+.legal{padding:0;background:var(--surface)}
+.legal + .legal{background:var(--surface);border-top:1px solid var(--line)}
+.legal .wrap{max-width:1120px}
+.legal summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;min-height:68px;padding-block:14px}
+.legal summary::-webkit-details-marker{display:none}
+.legal summary h2{margin:0;font-size:19px}
+.legal summary::after{content:"";flex:none;width:12px;height:12px;border-right:2.5px solid var(--ok);border-bottom:2.5px solid var(--ok);transform:rotate(45deg) translateY(-3px);transition:transform .25s}
+.legal details[open] summary::after{transform:rotate(-135deg) translateY(-3px)}
+.legal summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.legal summary:hover h2{color:var(--lien)}
+.legal-corps{max-width:720px;padding:6px 0 48px}
+@media (prefers-reduced-motion:no-preference){
+  .legal details[open] .legal-corps{animation:deplie .4s cubic-bezier(.16,1,.3,1)}
+}
 </style>
 
 <header class="hero">
@@ -667,18 +683,18 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
   </div>
 </main>
 
-<section class="legal" id="mentions-legales" aria-labelledby="ml-t"><div class="wrap">
-<h2 id="ml-t">Mentions légales</h2>
+<section class="legal" id="mentions-legales" aria-labelledby="ml-t"><div class="wrap"><details>
+<summary><h2 id="ml-t">Mentions légales</h2></summary><div class="legal-corps">
 <p><strong>Éditeur du site.</strong> Dimitri GIGAN, personne physique, porteur du projet de mutuelle obsèques, La Réunion. Le projet n’est pas encore constitué en société ni en mutuelle : il n’existe pas d’organisme assureur et aucune adhésion, cotisation ou garantie n’est proposée sur ce site.</p>
 <p><strong>Directeur de la publication.</strong> Dimitri GIGAN.</p>
 <p><strong>Contact.</strong> <a href="mailto:dimitrigigan@gmail.com">dimitrigigan@gmail.com</a></p>
 <p><strong>Hébergement du site.</strong> GitHub Pages, GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
 <p><strong>Stockage des pré-inscriptions.</strong> Supabase, hébergé dans l’Union européenne (région Irlande).</p>
 <p><strong>Nature des informations.</strong> Les montants et exemples présentés sont des hypothèses de travail et ne constituent ni une offre, ni un devis, ni un conseil en assurance.</p>
-</div></section>
+</div></details></div></section>
 
-<section class="legal" id="confidentialite" aria-labelledby="pc-t"><div class="wrap">
-<h2 id="pc-t">Politique de confidentialité</h2>
+<section class="legal" id="confidentialite" aria-labelledby="pc-t"><div class="wrap"><details>
+<summary><h2 id="pc-t">Politique de confidentialité</h2></summary><div class="legal-corps">
 <p>Cette page recueille des pré-inscriptions pour mesurer l’intérêt pour le projet de mutuelle obsèques. Voici, en clair, ce qui est fait de vos informations.</p>
 <h3>Qui est responsable ?</h3>
 <p>Dimitri GIGAN, porteur du projet (contact : voir les mentions légales).</p>
@@ -699,7 +715,7 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
 <p>Vous pouvez demander l’accès à vos données, leur rectification, leur suppression, ou retirer votre consentement à tout moment, en écrivant à l’adresse de contact indiquée dans les mentions légales. Vous pouvez aussi saisir la CNIL (<a href="https://www.cnil.fr" rel="noopener">cnil.fr</a>).</p>
 <h3>Mineurs</h3>
 <p>Ce formulaire s’adresse aux personnes majeures.</p>
-</div></section>
+</div></details></div></section>
 
 <footer><div class="wrap">Projet porté par Dimitri GIGAN, La Réunion. Les montants sont des hypothèses de travail. Aucune adhésion ni paiement n’est possible à ce stade.<nav aria-label="Informations légales"><a href="#mentions-legales">Mentions légales</a><a href="#confidentialite">Politique de confidentialité</a></nav></div></footer>
 
@@ -974,6 +990,27 @@ input[type=text][aria-invalid="true"],input[type=email][aria-invalid="true"],sel
   document.documentElement.addEventListener('pointerleave',function(){document.documentElement.classList.remove('curseur-actif')});
 })();
 </script>
+<script>
+/* Les volets légaux s'ouvrent depuis les liens du pied de page et de la page */
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function ouvrir(id,defiler){
+    var sec=document.getElementById(id);if(!sec||!sec.classList.contains('legal'))return false;
+    var d=sec.querySelector('details');if(!d)return false;d.open=true;
+    if(defiler)setTimeout(function(){sec.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})},40);
+    return true;
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+    var id=a.getAttribute('href').slice(1);
+    if(ouvrir(id,false)){e.preventDefault();history.replaceState(null,'','#'+id);setTimeout(function(){document.getElementById(id).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})},40)}
+  });
+  function depuisAdresse(){var id=location.hash.slice(1);if(id)ouvrir(id,true)}
+  addEventListener('hashchange',depuisAdresse);
+  if(location.hash)setTimeout(depuisAdresse,200);
+})();
+</script>
+
 
 
 
