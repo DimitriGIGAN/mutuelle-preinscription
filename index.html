@@ -390,6 +390,68 @@ footer nav a:hover{text-decoration-thickness:2px}
   .sec-title{background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 3px no-repeat;padding-bottom:6px;transition:background-size .8s cubic-bezier(.16,1,.3,1) .2s}
   .sec-title.is-visible{background-size:64px 3px}
 }
+
+/* ===== Encore plus de vie (octobre 2026) ===== */
+.communes{margin-top:72px}
+.defile{overflow:hidden;border-radius:var(--radius);padding:6px 0}
+.piste{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.piste[aria-hidden="true"]{display:none}
+.piste li{padding:9px 16px;border-radius:999px;background:var(--surface);border:1.5px solid var(--field-border);font-weight:500;font-size:15px;white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .defile{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .defile{display:flex;width:100%}
+  .piste,.piste[aria-hidden="true"]{display:flex;flex-wrap:nowrap;flex:none;padding-right:10px;animation:defile 70s linear infinite}
+  .defile:hover .piste{animation-play-state:paused}
+  @keyframes defile{to{transform:translateX(-100%)}}
+  .piste li{transition:background .2s,color .2s,border-color .2s,transform .2s}
+  .piste li:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);transform:translateY(-3px)}
+
+  /* Barre de progression de lecture */
+  .progres{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--accent);transform:scaleX(var(--p,0));transform-origin:0 50%;z-index:50;pointer-events:none}
+
+  /* Fond du contenu : deux grandes taches de lumière qui dérivent */
+  main{position:relative;overflow-x:clip}
+  main::before,main::after{content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:0;filter:blur(8px)}
+  main::before{width:520px;height:520px;left:-200px;top:260px;background:radial-gradient(circle,color-mix(in srgb,var(--hero-c) 22%,transparent),transparent 68%);animation:tache-a 24s ease-in-out infinite alternate}
+  main::after{width:600px;height:600px;right:-260px;top:1100px;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 16%,transparent),transparent 68%);animation:tache-b 30s ease-in-out infinite alternate}
+  main .wrap{position:relative;z-index:1}
+  @keyframes tache-a{to{transform:translate(160px,120px) scale(1.2)}}
+  @keyframes tache-b{to{transform:translate(-180px,-140px) scale(1.15)}}
+
+  /* Cartes : flottement léger, décalé d'une carte à l'autre */
+  .cards .card,.prices .price:not(.main){animation:flotte-carte 7s ease-in-out infinite}
+  .cards .card:nth-child(2),.prices .price:nth-child(3){animation-delay:-2.3s}
+  .cards .card:nth-child(3){animation-delay:-4.6s}
+  .prices .price.main{animation:flotte-carte 7s ease-in-out -1.2s infinite}
+  @keyframes flotte-carte{0%,100%{translate:0 0}50%{translate:0 -6px}}
+
+  /* Engagements : les points respirent à tour de rôle */
+  .chips li::before{animation:souffle 2.8s ease-out infinite}
+  .chips li:nth-child(2)::before{animation-delay:.9s}.chips li:nth-child(3)::before{animation-delay:1.8s}
+  @keyframes souffle{0%{box-shadow:0 0 0 0 rgba(255,106,77,.6)}70%,100%{box-shadow:0 0 0 9px rgba(255,106,77,0)}}
+
+  /* Titre du bandeau : un reflet de lumière le traverse de temps en temps */
+  @supports ((-webkit-background-clip:text) or (background-clip:text)){
+    .hero h1{background:linear-gradient(100deg,#fff 42%,#BFEDE8 50%,#fff 58%) 100% 0/260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+      animation:intro .9s ease-out 2.4s both,brille 8s ease-in-out 5s infinite}
+    @keyframes brille{0%,55%{background-position:100% 0}100%{background-position:0 0}}
+  }
+
+  /* Basculer Particulier / Entreprise : la carte entre en glissant */
+  #f,#fe{animation:basculer .55s cubic-bezier(.16,1,.3,1)}
+  @keyframes basculer{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  /* Parallaxe du bandeau : texte et formulaire se décalent en sens inverse de la souris */
+  .heroGrid>div:first-child{translate:calc(var(--px,0)*10px) calc(var(--py,0)*6px);transition:translate .25s ease-out}
+  #formZone{translate:calc(var(--px,0)*-12px) calc(var(--py,0)*-7px);transition:translate .25s ease-out}
+  /* Curseur lumineux */
+  .curseur-point,.curseur-anneau{position:fixed;left:0;top:0;pointer-events:none;z-index:60;border-radius:50%;opacity:0;transition:opacity .25s,width .25s,height .25s,background .25s,border-color .25s}
+  .curseur-point{width:8px;height:8px;margin:-4px 0 0 -4px;background:var(--accent)}
+  .curseur-anneau{width:36px;height:36px;margin:-18px 0 0 -18px;border:2px solid var(--accent)}
+  .curseur-actif .curseur-point,.curseur-actif .curseur-anneau{opacity:1}
+  .curseur-anneau.sur{width:60px;height:60px;margin:-30px 0 0 -30px;background:rgba(255,106,77,.14)}
+}
 </style>
 
 <header class="hero">
@@ -480,6 +542,13 @@ footer nav a:hover{text-decoration-thickness:2px}
         <p>Sans but lucratif, gouvernée par ses membres. Les excédents restent dans la mutuelle.</p>
       </div>
     </div>
+
+
+    <section class="communes" aria-labelledby="h-com">
+      <h2 class="sec-title" id="h-com" data-reveal>Choisissez votre commune</h2>
+      <p class="sec-sub" data-reveal>Les 24 communes de l’île figurent dans le formulaire.</p>
+      <div class="defile" data-reveal><ul class="piste"><li>Les Avirons</li><li>Bras-Panon</li><li>Cilaos</li><li>Entre-Deux</li><li>L’Étang-Salé</li><li>La Plaine-des-Palmistes</li><li>La Possession</li><li>Le Port</li><li>Petite-Île</li><li>Saint-André</li><li>Saint-Benoît</li><li>Saint-Denis</li><li>Saint-Joseph</li><li>Saint-Leu</li><li>Saint-Louis</li><li>Saint-Paul</li><li>Saint-Philippe</li><li>Saint-Pierre</li><li>Sainte-Marie</li><li>Sainte-Rose</li><li>Sainte-Suzanne</li><li>Salazie</li><li>Le Tampon</li><li>Les Trois-Bassins</li></ul><ul class="piste" aria-hidden="true"><li>Les Avirons</li><li>Bras-Panon</li><li>Cilaos</li><li>Entre-Deux</li><li>L’Étang-Salé</li><li>La Plaine-des-Palmistes</li><li>La Possession</li><li>Le Port</li><li>Petite-Île</li><li>Saint-André</li><li>Saint-Benoît</li><li>Saint-Denis</li><li>Saint-Joseph</li><li>Saint-Leu</li><li>Saint-Louis</li><li>Saint-Paul</li><li>Saint-Philippe</li><li>Saint-Pierre</li><li>Sainte-Marie</li><li>Sainte-Rose</li><li>Sainte-Suzanne</li><li>Salazie</li><li>Le Tampon</li><li>Les Trois-Bassins</li></ul></div>
+    </section>
 
     <section class="estim" aria-labelledby="h-est">
       <h2 class="sec-title" id="h-est" data-reveal>Combien cela coûterait-il ?</h2>
@@ -763,6 +832,32 @@ footer nav a:hover{text-decoration-thickness:2px}
   });
 })();
 </script>
+<script>
+/* Vie de la page : progression, curseur lumineux, parallaxe. Souris et mouvement autorisés seulement. */
+(function(){
+  if(!window.matchMedia||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var bar=document.createElement('div');bar.className='progres';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);
+  var tick=0;
+  function prog(){tick=0;var h=document.documentElement.scrollHeight-innerHeight;bar.style.setProperty('--p',h>0?Math.min(1,scrollY/h):0)}
+  addEventListener('scroll',function(){if(!tick)tick=requestAnimationFrame(prog)},{passive:true});prog();
+  if(!window.matchMedia('(hover:hover)').matches)return;
+  var hero=document.querySelector('.hero');
+  if(hero)hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();
+    hero.style.setProperty('--px',((e.clientX-r.left)/r.width-.5)*2);hero.style.setProperty('--py',((e.clientY-r.top)/r.height-.5)*2)});
+  if(hero)hero.addEventListener('pointerleave',function(){hero.style.setProperty('--px',0);hero.style.setProperty('--py',0)});
+  var dot=document.createElement('div'),ring=document.createElement('div');
+  dot.className='curseur-point';ring.className='curseur-anneau';dot.setAttribute('aria-hidden','true');ring.setAttribute('aria-hidden','true');
+  document.body.appendChild(ring);document.body.appendChild(dot);
+  var x=0,y=0,rx=0,ry=0,run=false;
+  function loop(){rx+=(x-rx)*.18;ry+=(y-ry)*.18;ring.style.transform='translate('+rx+'px,'+ry+'px)';dot.style.transform='translate('+x+'px,'+y+'px)';
+    if(Math.abs(x-rx)>.1||Math.abs(y-ry)>.1)requestAnimationFrame(loop);else run=false}
+  addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;x=e.clientX;y=e.clientY;document.documentElement.classList.add('curseur-actif');
+    var over=e.target.closest&&e.target.closest('a,button,label,select,input,.card,.price,.piste li');ring.classList.toggle('sur',!!over);
+    if(!run){run=true;requestAnimationFrame(loop)}},{passive:true});
+  document.documentElement.addEventListener('pointerleave',function(){document.documentElement.classList.remove('curseur-actif')});
+})();
+</script>
+
 
 
 
